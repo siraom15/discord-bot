@@ -1,25 +1,34 @@
 const Discord = require('discord.js');
 
+const fs = require('fs');
 const { prefix, token, chatchannal } = require('./config.json');
 const client = new Discord.Client();
 const yts = require('yt-search')
 const ytdl = require('ytdl-core-discord');
+const queue = new Map();
 
 async function play(connection, url) {
-    connection.play(await ytdl(url), { type: 'opus' });
+    connection.play(await ytdl(url, { filter: format => ['251'], highWaterMark: 1 << 25 }), { type: 'opus' });
 }
 
 client.once('ready', () => {
     console.log('พร้อม!');
 
 });
-
+client.once('reconnecting', () => {
+    console.log('กำลังเชื่อมต่อใหม่...');
+});
+client.once('disconnect', () => {
+    console.log('ออกจากเซิฟเวอร์');
+});
 client.on('message', async message => {
     if (!message.content.startsWith(prefix) || message.author.bot) return;
     if (!message.guild) return;
 
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
+
+    const serverQueue = queue.get(message.guild.id);
 
     if (command === 'เซิฟ') {
         message.channel.send(`เซิฟเวอร์นี้ชื่อ : ${message.guild.name}`);
@@ -61,6 +70,7 @@ client.on('message', async message => {
         // by default, discord.js will `.join()` the array with `\n`
         message.channel.send(avatarList);
     }
+    // ส่วนของเพลง
     else if (command === 'เล่น') {
         if (message.member.voice.channel) {
             if (!args.length) {
@@ -68,6 +78,7 @@ client.on('message', async message => {
             } else {
                 let url = args[0].trim();
                 connection = await message.member.voice.channel.join();
+                // play zone
                 if (url.substring(0, 4) == "http") {
                     play(connection, url);
                     ytdl.getInfo(url, (err, info) => {
@@ -90,6 +101,7 @@ client.on('message', async message => {
                         });
                     })
                 }
+
             }
         } else {
             message.reply('คุณต้องเข้า แชทด้วยเสียงก่อนค่ะ');
@@ -104,7 +116,72 @@ client.on('message', async message => {
             message.channel.send('มีอะไรที่เรียกหรอคะ?');
         }
     }
-    
+    else if (command === 'เสียง'){
+        if(!args.length) return;
+        // connection.vo
+    }
+
+    else if (command === 'test') {
+        // check ว่ามี args หรือไม่
+        if (!args.length) return;
+        // check เชื่อม User หรือยัง
+        if (message.member.voice.channel) {
+
+            // หาข้อมูลเพลง
+            let url = args[0].trim();
+
+            // เก็บ info 
+            let song_info = await ytdl.getInfo(url);
+
+            let song = {
+                title: song_info.title,
+                url: song_info.video_url
+            }
+            // check ว่ามี Queue ในเซิฟนี้หรือไม่
+            if (!serverQueue) {
+                // กำหนดรูปแบบของ Queue
+                let queueConstructor = {
+                    textChannel: message.channel,
+                    voiceChannel: message.member.voice.channel,
+                    connection: null,
+                    songs: [],
+                    volume: 5,
+                    playing: true
+                };
+                // เพิ่มรูปแบบเข้าไป
+                queue.set(message.guild.id, queueConstructor);
+                // เพิ่มเพลงเข้า Queue
+                queueConstructor.songs.push(song);
+
+                try {
+                    let connection = await message.member.voice.channel.join();
+                    queueConstructor.connection = connection;
+                    console.log('-----------------------------');
+
+                    console.log(message.guild);
+                    console.log('-----------------------------');
+                    console.log(queueConstructor.songs[0]);
+
+                    this.play(message.guild, queueConstructor.songs[0].url);
+                }
+                catch (err) {
+                    console.log(err);
+                    queue.delete(message.guild.id);
+                    return message.channel.send(err);
+                }
+            }
+            else {
+                serverQueue.songs.push(song);
+                return message.channel.send(`${song.title} ถูกเพิ่มเข้าคิวแล้ว!`);
+            }
+
+
+
+        }
+        else {
+            message.channel.send('กรุณาเข้าห้องพูดคุยด้วยเสียงค่ะ');
+        }
+    }
     //  ส่วนของ admin
     else if (command === 'เตะ') {
         if ((message.member.hasPermission("ADMINISTRATOR"))) {
@@ -140,6 +217,9 @@ client.on('guildMemberAdd', member => {
     // Send the message, mentioning the member
     channel.send(`ยินดีต้อนรับเข้าสู่ Server : ${member.guild.name} ค่ะ, ${member}`);
 });
+
+// function เกี่ยวกับเพลง
+
 client.login(token);
 
 
