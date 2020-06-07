@@ -1,1 +1,1 @@
-forever start nodemon --exitcrash app.js
+cd src forever start nodemon --exitcrash app.js

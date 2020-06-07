@@ -1,15 +1,12 @@
 const Discord = require('discord.js');
 
-const fs = require('fs');
-const { prefix, token, chatchannal } = require('./config.json');
+
+const { prefix, token, chatchannal } = require('../config.json');
 const client = new Discord.Client();
 const yts = require('yt-search')
 const ytdl = require('ytdl-core-discord');
 const queue = new Map();
 
-// async function play(connection, url) {
-//     connection.play(await ytdl(url, { filter: format => ['251'], highWaterMark: 1 << 25 }), { type: 'opus' });
-// }
 
 client.once('ready', () => {
     console.log('พร้อม!');
@@ -70,50 +67,6 @@ client.on('message', async message => {
         // by default, discord.js will `.join()` the array with `\n`
         message.channel.send(avatarList);
     }
-    // ส่วนของเพลง
-    else if (command === 'เล่น2') {
-        if (message.member.voice.channel) {
-            if (!args.length) {
-                return message.channel.send(`โปรดใส่ url เพลงค่ะ`);
-            } else {
-                let url = args[0].trim();
-                connection = await message.member.voice.channel.join();
-
-                // play zone
-                if (url.substring(0, 4) == "http") {
-                    const dispatcher = play(connection, url);
-                    ytdl.getInfo(url, (err, info) => {
-                        message.channel.send(`:grinning: ได้ค่ะ ขณะนี้กำลังเล่น : \` ${info.title} \``);
-                    });
-                    dispatcher.setVolumeLogarithmic(connection.volume / 5);
-                } else {
-                    let name = args.join().split(',').join(' ').trim();
-
-                    yts(name, function (err, r) {
-                        console.log(r);
-
-                        if (typeof (r) == 'undefined') return;
-                        const videos = r.videos
-                        message.channel.send(`:mag_right: กำลังค้นหา : ${name}`);
-                        let result_url = videos[0].url;
-
-                        const dispatcher = play(connection, result_url);
-
-                        ytdl.getInfo(result_url, (err, info) => {
-                            console.log(info.title);
-                            message.channel.send(`:grinning: ได้ค่ะ ขณะนี้กำลังเล่น : \` ${info.title} \``);
-                        });
-                        dispatcher.setVolumeLogarithmic(connection.volume / 5);
-                    })
-                }
-
-
-            }
-        } else {
-            message.reply('คุณต้องเข้า แชทด้วยเสียงก่อนค่ะ');
-        }
-    }
-
     else if (command === 'เตะ') {
         if ((message.member.hasPermission("ADMINISTRATOR"))) {
             if (args.length) {
@@ -137,6 +90,8 @@ client.on('message', async message => {
             }
         }
     }
+
+    //ส่วนของเพลง
     else if (command === 'เล่น') {
         if (!message.member.voice.channel) {
             return message.channel.send(`:worried: กรุณาเข้าห้องแชทด้วยเสียงก่อนค่ะ `);
