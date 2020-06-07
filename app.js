@@ -7,9 +7,9 @@ const yts = require('yt-search')
 const ytdl = require('ytdl-core-discord');
 const queue = new Map();
 
-async function play(connection, url) {
-    connection.play(await ytdl(url, { filter: format => ['251'], highWaterMark: 1 << 25 }), { type: 'opus' });
-}
+// async function play(connection, url) {
+//     connection.play(await ytdl(url, { filter: format => ['251'], highWaterMark: 1 << 25 }), { type: 'opus' });
+// }
 
 client.once('ready', () => {
     console.log('พร้อม!');
@@ -71,118 +71,49 @@ client.on('message', async message => {
         message.channel.send(avatarList);
     }
     // ส่วนของเพลง
-    else if (command === 'เล่น') {
+    else if (command === 'เล่น2') {
         if (message.member.voice.channel) {
             if (!args.length) {
                 return message.channel.send(`โปรดใส่ url เพลงค่ะ`);
             } else {
                 let url = args[0].trim();
                 connection = await message.member.voice.channel.join();
+
                 // play zone
                 if (url.substring(0, 4) == "http") {
-                    play(connection, url);
+                    const dispatcher = play(connection, url);
                     ytdl.getInfo(url, (err, info) => {
                         message.channel.send(`:grinning: ได้ค่ะ ขณะนี้กำลังเล่น : \` ${info.title} \``);
                     });
+                    dispatcher.setVolumeLogarithmic(connection.volume / 5);
                 } else {
                     let name = args.join().split(',').join(' ').trim();
 
                     yts(name, function (err, r) {
+                        console.log(r);
 
+                        if (typeof (r) == 'undefined') return;
                         const videos = r.videos
                         message.channel.send(`:mag_right: กำลังค้นหา : ${name}`);
                         let result_url = videos[0].url;
 
-                        play(connection, result_url);
+                        const dispatcher = play(connection, result_url);
 
                         ytdl.getInfo(result_url, (err, info) => {
                             console.log(info.title);
                             message.channel.send(`:grinning: ได้ค่ะ ขณะนี้กำลังเล่น : \` ${info.title} \``);
                         });
+                        dispatcher.setVolumeLogarithmic(connection.volume / 5);
                     })
                 }
+
 
             }
         } else {
             message.reply('คุณต้องเข้า แชทด้วยเสียงก่อนค่ะ');
         }
     }
-    else if (command === 'ออกไป') {
-        connection.disconnect()
-    }
-    else if (command === 'เข้ามา') {
-        if (message.member.voice.channel) {
-            connection = await message.member.voice.channel.join();
-            message.channel.send('มีอะไรที่เรียกหรอคะ?');
-        }
-    }
-    else if (command === 'เสียง'){
-        if(!args.length) return;
-        // connection.vo
-    }
 
-    else if (command === 'test') {
-        // check ว่ามี args หรือไม่
-        if (!args.length) return;
-        // check เชื่อม User หรือยัง
-        if (message.member.voice.channel) {
-
-            // หาข้อมูลเพลง
-            let url = args[0].trim();
-
-            // เก็บ info 
-            let song_info = await ytdl.getInfo(url);
-
-            let song = {
-                title: song_info.title,
-                url: song_info.video_url
-            }
-            // check ว่ามี Queue ในเซิฟนี้หรือไม่
-            if (!serverQueue) {
-                // กำหนดรูปแบบของ Queue
-                let queueConstructor = {
-                    textChannel: message.channel,
-                    voiceChannel: message.member.voice.channel,
-                    connection: null,
-                    songs: [],
-                    volume: 5,
-                    playing: true
-                };
-                // เพิ่มรูปแบบเข้าไป
-                queue.set(message.guild.id, queueConstructor);
-                // เพิ่มเพลงเข้า Queue
-                queueConstructor.songs.push(song);
-
-                try {
-                    let connection = await message.member.voice.channel.join();
-                    queueConstructor.connection = connection;
-                    console.log('-----------------------------');
-
-                    console.log(message.guild);
-                    console.log('-----------------------------');
-                    console.log(queueConstructor.songs[0]);
-
-                    this.play(message.guild, queueConstructor.songs[0].url);
-                }
-                catch (err) {
-                    console.log(err);
-                    queue.delete(message.guild.id);
-                    return message.channel.send(err);
-                }
-            }
-            else {
-                serverQueue.songs.push(song);
-                return message.channel.send(`${song.title} ถูกเพิ่มเข้าคิวแล้ว!`);
-            }
-
-
-
-        }
-        else {
-            message.channel.send('กรุณาเข้าห้องพูดคุยด้วยเสียงค่ะ');
-        }
-    }
-    //  ส่วนของ admin
     else if (command === 'เตะ') {
         if ((message.member.hasPermission("ADMINISTRATOR"))) {
             if (args.length) {
@@ -206,7 +137,185 @@ client.on('message', async message => {
             }
         }
     }
+    else if (command === 'เล่น') {
+        if (!message.member.voice.channel) {
+            return message.channel.send(`:worried: กรุณาเข้าห้องแชทด้วยเสียงก่อนค่ะ `);
+        }
+        if (!args.length) {
+            return message.channel.send(`:worried: โปรดใส่ url เพลงค่ะ`);
+        }
+        setQueue(args, message, serverQueue);
+        return;
+    }
+    else if (command === 'ข้าม') {
+        skip(message, serverQueue);
+        return;
+    }
+    else if (command === 'ออกไป') {
+        leave(message, serverQueue);
+        return;
+    }
+    else if (command === 'คิว') {
+        showQueue(message, serverQueue);
+        return;
+    }
+
 });
+
+//function เพลง
+async function setQueue(args, message, serverQueue) {
+    // รับ Url / ชื่อเพลง
+
+    if (args[0].substring(0, 4) !== "http") {
+        let name = args.join().split(',').join(' ').trim();
+        try {
+            message.channel.send(`:mag_right: กำลังค้นหา : \` ${name} \``);
+            let serachInfo = await yts(name);
+            url = serachInfo.videos[0].url;
+        } catch (err) {
+            if (err) console.log(err);
+            message.channel.send(`:frowning2:  ไม่พบ : \`${name} กรุณาลองใหม่ค่ะ\``);
+            return;
+        }
+    } else {
+        url = args[0].trim();
+    }
+
+    //หา ข้อมูลเพลง
+    const songInfo = await ytdl.getInfo(url);
+
+    const song = {
+        "title": songInfo.title,
+        "url": songInfo.video_url
+    }
+
+    //เช็คว่า server นี้มี คิวหรือยัง ถ้าไม่มีให้สรา้ง ถ้ามีให้เพิ่มเข้าคิว
+    if (!serverQueue) {
+        // สร้าง connection
+        const voiceChannel = message.member.voice.channel;
+        //สร้างรูปแบบของคิว
+        const queueConstructor = {
+            textChannel: message.channel,
+            voiceChannel: voiceChannel,
+            connection: null,
+            songs: [],
+            volume: 5,
+            playing: true
+        }
+
+        //เพิมรูปแบบ และ id server เข้าคิว
+
+        queue.set(message.guild.id, queueConstructor);
+
+        // เพิ่มเพลงเข้าคิว
+
+        queueConstructor.songs.push(song);
+
+        // เช็คว่า connect channel ได้ไหม
+
+        try {
+            // เข้า channal
+            let connection = await voiceChannel.join();
+            // เพิ่ม connection เข้า รูปแบบ
+            queueConstructor.connection = connection;
+            // เล่นเพลง คิวที่ 1
+            playSong(message.guild, queueConstructor.songs[0]);
+
+        } catch (err) {
+            console.log(err);
+            queue.delete(message.guild.id);
+            return message.channel.send(err);
+        }
+
+    }
+    // ถ้ามีคิวอยู่แล้ว เพิ่มเข้าคิว 
+    else {
+
+        serverQueue.songs.push(song);
+        return message.channel.send(`:grin: \`${song.title}  \`ถูกเพิ่มเข้าคิวแล้วค่ะ `);
+
+    }
+
+
+
+}
+async function playSong(guild, song) {
+    const serverQueue = queue.get(guild.id);
+    if (!song) {
+        serverQueue.voiceChannel.leave();
+        queue.delete(guild.id);
+        return;
+    }
+    const dispatcher = serverQueue.connection.play(await ytdl(song.url, { filter: format => ['251'], highWaterMark: 1 << 25 }), { type: 'opus' });
+    await dispatcher
+        .on("start", () => {
+            serverQueue.textChannel.send(`:grinning: ได้ค่ะ ขณะนี้กำลังเล่น : \` ${song.title} \``);
+        })
+        .on("finish", () => {
+            serverQueue.songs.shift();
+            playSong(guild, serverQueue.songs[0]);
+        })
+        .on("error", error => console.error(error));
+
+}
+function skip(message, serverQueue) {
+    if (!message.member.voice.channel)
+        return message.channel.send(
+            "คุณต้องอยู่ในห้องสนทนาจึงจะข้ามเพลงได้ค่ะ :smiling_face_with_3_hearts:  "
+        );
+    if (!serverQueue)
+        return message.channel.send("คิวยังว่างอยู่ค่ะ :laughing: ");
+    serverQueue.connection.dispatcher.end();
+
+}
+function leave(message, serverQueue) {
+    if (!message.member.voice.channel)
+        return message.channel.send(
+            "คุณต้องอยู่ในห้องสนทนาจึงจะสั่ง เตะฉันได้ค่ะ :triumph: "
+        );
+    serverQueue.songs = [];
+    serverQueue.connection.dispatcher.end();
+}
+function showQueue(message, serverQueue) {
+    if (!serverQueue) return message.channel.send(':pray: ไม่มีเพลงในคิวค่ะ');
+    const guild_id = message.guild.id;
+    const queueInfo = queue.get(guild_id);
+    const allSong = queueInfo.songs
+
+    const Embed = {
+        color: '#108AFC',
+        title: `คิวเพลงใน ${message.guild.name} `,
+        // url: 'https://discord.js.org',
+        fields: [
+            {
+                name: 'ขณะนี้กำลังเล่น',
+                value: `${allSong[0].title}`,
+            },
+            {
+                name: '\u200b',
+                value: 'คิวทั้งหมด',
+                inline: false,
+            }
+        ],
+        timestamp: new Date(),
+        footer: {
+            text: `Source code: 
+github.com/siraom15/discord-bot`,
+            icon_url: 'https://icons-for-free.com/iconfiles/png/512/part+1+github-1320568339880199515.png'
+        },
+    };
+    let i = 1;
+    for (var key in allSong) {
+        if (allSong.hasOwnProperty(key) & i <= 5) {
+            i++;
+            Embed.fields.push({ name: '\u200b', value: allSong[key].title  })
+        }
+    }
+    message.channel.send({ embed: Embed });
+
+}
+
+
 
 // ทักทายสมาชิกใหม่
 client.on('guildMemberAdd', member => {
@@ -218,7 +327,6 @@ client.on('guildMemberAdd', member => {
     channel.send(`ยินดีต้อนรับเข้าสู่ Server : ${member.guild.name} ค่ะ, ${member}`);
 });
 
-// function เกี่ยวกับเพลง
 
 client.login(token);
 

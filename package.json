@@ -15,6 +15,7 @@
     "ffmpeg": "0.0.4",
     "fluent-ffmpeg": "^2.1.2",
     "forever": "^3.0.0",
+    "node-opus": "^0.3.3",
     "nodemon": "^2.0.4",
     "yt-search": "^1.1.2",
     "ytdl-core-discord": "github:amishshah/ytdl-core-discord"
