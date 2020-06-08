@@ -10,6 +10,8 @@ const queue = new Map();
 
 client.once('ready', () => {
     console.log('พร้อม!');
+    client.user.setStatus('online')
+    client.user.setActivity('พิมพ์ คำสั่ง เพื่อรับคำสั่งบอท')
 
 });
 client.once('reconnecting', () => {
@@ -20,6 +22,48 @@ client.once('disconnect', () => {
 });
 client.on('message', async message => {
     if (!message.content.startsWith(prefix) || message.author.bot) return;
+    if (message.content === 'คำสั่ง') {
+
+        const exampleEmbed = {
+            color: 0x0099ff,
+            title: 'คำสั่งทั้งหมด',
+            fields: [
+                {
+                    name: '\u200b',
+                    value: '\u200b',
+                    inline: false,
+                },
+                {
+                    name: 'เกี่ยวกับเพลง',
+                    value: '`เล่น + Url เพลง` , `เล่น + ชื่อเพลง` , `ข้าม => ข้ามเพลงต่อไป` , `คิว => แสดงคิวทั้งหมด`, `ออกไป => บอท disconnect ออก` , `เสียง + เลข(1-100) => ปรับความดังของเสียงเพลง` ',
+                },
+                {
+                    name: '\u200b',
+                    value: '\u200b',
+                    inline: false,
+                },
+                {
+                    name: 'เกี่ยวกับเซิฟเวอร์',
+                    value: '`เซิฟ => แสดงชื่อเซิฟเวอร์`, `สมาชิก => แสดงจำนวนสมาชิก` , `ข้อมูลฉัน => แสดงข้อมูลของฉัน` , `รูปโปรไฟล์ + @mention => แสดง url ของรูปโปรไฟล์` , `เตะ + @mention => เตะสมาชิก (เฉพาะ Admin)` ',
+                    inline: true,
+                },
+                {
+                    name: '\u200b',
+                    value: '\u200b',
+                    inline: false,
+                },
+                {
+                    name: 'อื่นๆ',
+                    value: '`กินไรดี => สุ่มชื่ออาหาร`',
+                    inline: true,
+                },
+            ],
+
+        };
+
+        message.author.send({ embed: exampleEmbed })
+
+    }
     if (!message.guild) return;
 
     const args = message.content.slice(prefix.length).split(/ +/);
@@ -266,20 +310,20 @@ github.com/siraom15/discord-bot`,
     for (var key in allSong) {
         if (allSong.hasOwnProperty(key) & i <= 5) {
             i++;
-            Embed.fields.push({ name: '\u200b', value: allSong[key].title  })
+            Embed.fields.push({ name: '\u200b', value: allSong[key].title })
         }
     }
     message.channel.send({ embed: Embed });
 
 }
-function setVolumn(args,message, serverQueue) {
+function setVolumn(args, message, serverQueue) {
     if (!message.member.voice.channel)
         return message.channel.send(
             "คุณต้องอยู่ในห้องสนทนาจึงจะสั่งลดเสียงได้ :triumph: "
         );
     if (!args.length) return;
-    if(isNaN(args[0])) return message.channel.send('กรุณากรอกตัวเลขค่ะ :triumph:');
-    let volume = args[0]/100;
+    if (isNaN(args[0])) return message.channel.send('กรุณากรอกตัวเลขค่ะ :triumph:');
+    let volume = args[0] / 100;
     serverQueue.connection.dispatcher.setVolume(volume);
     message.channel.send(`ปรับเสียงเป็น ${volume} แล้วค่ะ :smiley:`);
 }
