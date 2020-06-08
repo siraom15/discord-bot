@@ -278,7 +278,7 @@ function setVolumn(args,message, serverQueue) {
             "คุณต้องอยู่ในห้องสนทนาจึงจะสั่งลดเสียงได้ :triumph: "
         );
     if (!args.length) return;
-    // if(typeof(args[0])!='number') return;
+    if(isNaN(args[0])) return message.channel.send('กรุณากรอกตัวเลขค่ะ :triumph:');
     let volume = args[0]/100;
     serverQueue.connection.dispatcher.setVolume(volume);
     message.channel.send(`ปรับเสียงเป็น ${volume} แล้วค่ะ :smiley:`);
