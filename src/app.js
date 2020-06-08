@@ -60,8 +60,14 @@ client.on('message', async message => {
             ],
 
         };
+        if(!message.guild){
+            message.author.send({ embed: exampleEmbed })
 
-        message.author.send({ embed: exampleEmbed })
+        }else{
+            message.channel.send('ส่งให้ใน direct message แล้วค่ะ :heart_eyes: ')
+            message.author.send({ embed: exampleEmbed })
+
+        }
 
     }
     if (!message.guild) return;
