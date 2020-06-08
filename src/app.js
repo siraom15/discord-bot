@@ -263,8 +263,8 @@ async function playSong(guild, song) {
             serverQueue.songs.shift();
             playSong(guild, serverQueue.songs[0]);
         })
-        .on("error", error => console.error(error));
-
+        .on("error", error => console.error(error))
+        .setVolume(0.50);
 }
 function skip(message, serverQueue) {
     if (!message.member.voice.channel)
@@ -330,7 +330,7 @@ function setVolumn(args, message, serverQueue) {
     if (!args.length) return;
     if (isNaN(args[0])) return message.channel.send('กรุณากรอกตัวเลขค่ะ :triumph:');
     let volume = args[0] / 100;
-    serverQueue.connection.dispatcher.setVolume(volume);
+    serverQueue.connection.dispatcher.setVolume(args[0]);
     message.channel.send(`ปรับเสียงเป็น ${volume} แล้วค่ะ :smiley:`);
 }
 
