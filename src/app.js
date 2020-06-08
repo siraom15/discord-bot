@@ -114,6 +114,10 @@ client.on('message', async message => {
         showQueue(message, serverQueue);
         return;
     }
+    else if (command === 'เสียง') {
+        setVolumn(args, message, serverQueue);
+        return;
+    }
 
 });
 
@@ -185,7 +189,6 @@ async function setQueue(args, message, serverQueue) {
     }
     // ถ้ามีคิวอยู่แล้ว เพิ่มเข้าคิว 
     else {
-
         serverQueue.songs.push(song);
         return message.channel.send(`:grin: \`${song.title}  \`ถูกเพิ่มเข้าคิวแล้วค่ะ `);
 
@@ -269,7 +272,17 @@ github.com/siraom15/discord-bot`,
     message.channel.send({ embed: Embed });
 
 }
-
+function setVolumn(args,message, serverQueue) {
+    if (!message.member.voice.channel)
+        return message.channel.send(
+            "คุณต้องอยู่ในห้องสนทนาจึงจะสั่งลดเสียงได้ :triumph: "
+        );
+    if (!args.length) return;
+    // if(typeof(args[0])!='number') return;
+    let volume = args[0]/100;
+    serverQueue.connection.dispatcher.setVolume(volume);
+    message.channel.send(`ปรับเสียงเป็น ${volume} แล้วค่ะ :smiley:`);
+}
 
 
 // ทักทายสมาชิกใหม่
