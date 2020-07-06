@@ -24,7 +24,7 @@ client.on('message', async message => {
     if (!message.content.startsWith(prefix) || message.author.bot) return;
     if (message.content === 'คำสั่ง') {
 
-        const exampleEmbed = {
+        const Embed = {
             color: 0x0099ff,
             title: 'คำสั่งทั้งหมด',
             fields: [
@@ -44,7 +44,7 @@ client.on('message', async message => {
                 },
                 {
                     name: 'เกี่ยวกับเซิฟเวอร์',
-                    value: '`เซิฟ => แสดงชื่อเซิฟเวอร์`, `สมาชิก => แสดงจำนวนสมาชิก` , `ข้อมูลฉัน => แสดงข้อมูลของฉัน` , `รูปโปรไฟล์ + @mention => แสดง url ของรูปโปรไฟล์` , `เตะ + @mention => เตะสมาชิก (เฉพาะ Admin)` ',
+                    value: '`เซิฟ => แสดงชื่อเซิฟเวอร์`, `สมาชิก => แสดงจำนวนสมาชิก` , `ข้อมูลฉัน => แสดงข้อมูลของฉัน` , `รูปโปรไฟล์ + @mention => แสดง url ของรูปโปรไฟล์` , `เตะ + @mention => เตะสมาชิก (เฉพาะ Admin)`, `แบน + @mention => แบนสมาชิก (เฉพาะ Admin)` ',
                     inline: true,
                 },
                 {
@@ -61,11 +61,11 @@ client.on('message', async message => {
 
         };
         if(!message.guild){
-            message.author.send({ embed: exampleEmbed })
+            message.author.send({ embed: Embed })
 
         }else{
             message.channel.send('ส่งให้ใน direct message แล้วค่ะ :heart_eyes: ')
-            message.author.send({ embed: exampleEmbed })
+            message.author.send({ embed: Embed })
 
         }
 
@@ -137,6 +137,29 @@ client.on('message', async message => {
                 }
             } else {
                 message.channel.send('กรุณาใส่ชื่อคนที่ต้องการเตะด้วยค่ะ')
+            }
+        }
+    }
+    else if (command === 'แบน') {
+        if ((message.member.hasPermission("ADMINISTRATOR"))) {
+            if (args.length) {
+                const user = message.mentions.users.first();
+                if (user) {
+                    const member = message.guild.member(user);
+                    if (member) {
+                        member
+                            .ban('Optional reason that will display in the audit logs')
+                            .then(() => {
+                                message.reply(`แบน ผู้ใช้ ${user.tag} ออกเรียบร้อยแล้วค่ะ`);
+                            })
+                            .catch(err => {
+                                message.reply('ไม่สามารถแบน ได้ค่ะ');
+                                console.error(err);
+                            });
+                    }
+                }
+            } else {
+                message.channel.send('กรุณาใส่ชื่อคนที่ต้องการแบนด้วยค่ะ')
             }
         }
     }
@@ -257,7 +280,7 @@ async function playSong(guild, song) {
     const dispatcher = serverQueue.connection.play(await ytdl(song.url, { filter: format => ['251'], highWaterMark: 1 << 25 }), { type: 'opus' });
     await dispatcher
         .on("start", () => {
-            serverQueue.textChannel.send(`:grinning: ได้ค่ะ ขณะนี้กำลังเล่น : \` ${song.title} \``);
+            serverQueue.textChannel.send(`:grinning: ขณะนี้กำลังเล่น : \` ${song.title} \``);
         })
         .on("finish", () => {
             serverQueue.songs.shift();
