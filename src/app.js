@@ -44,7 +44,7 @@ client.on('message', async message => {
                 },
                 {
                     name: 'เกี่ยวกับเซิฟเวอร์',
-                    value: '`เซิฟ => แสดงชื่อเซิฟเวอร์`, `สมาชิก => แสดงจำนวนสมาชิก` , `ข้อมูลฉัน => แสดงข้อมูลของฉัน` , `รูปโปรไฟล์ + @mention => แสดง url ของรูปโปรไฟล์` , `เตะ + @mention => เตะสมาชิก (เฉพาะ Admin)`, `แบน + @mention => แบนสมาชิก (เฉพาะ Admin)` ',
+                    value: '`เซิฟ => แสดงชื่อเซิฟเวอร์`, `สมาชิก => แสดงจำนวนสมาชิก` \n`ข้อมูลฉัน => แสดงข้อมูลของฉัน` , `รูปโปรไฟล์ + @mention => แสดง url ของรูปโปรไฟล์` \n`เตะ + @mention => เตะสมาชิก (เฉพาะ Admin)`, \n`แบน + @mention => แบนสมาชิก (เฉพาะ Admin)` , `รายชื่อแบน => แสดงรายชื่อสมาชิกที่ถูกแบน`, `ปลดแบน + id => ปลดแบนโดยใช้ id จากฟังก์ชัน รายชื่อแบน` ',
                     inline: true,
                 },
                 {
@@ -60,13 +60,12 @@ client.on('message', async message => {
             ],
 
         };
-        if(!message.guild){
+        if (!message.guild) {
             message.author.send({ embed: Embed })
 
-        }else{
+        } else {
             message.channel.send('ส่งให้ใน direct message แล้วค่ะ :heart_eyes: ')
             message.author.send({ embed: Embed })
-
         }
 
     }
@@ -158,6 +157,28 @@ client.on('message', async message => {
                             });
                     }
                 }
+            } else {
+                message.channel.send('กรุณาใส่ชื่อคนที่ต้องการแบนด้วยค่ะ')
+            }
+        }
+    }
+    else if (command === 'รายชื่อแบน') {
+        message.guild.fetchBans()
+            .then(banned => {
+                let list = "";
+                banned.forEach(element => {
+                    list += "ชื่อผู้ใช้ : " + element.user.username + " (id : " + element.user.id + ")" + "\n"
+                });
+                message.channel.send(`**โดนแบนทั้งหมด ${banned.size} บัญชี **: \n${list}`);
+            })
+            .catch(console.error);
+    }
+    else if (command === 'ปลดแบน') {
+        if ((message.member.hasPermission("ADMINISTRATOR"))) {
+            if (args.length) {
+                message.guild.members.unban(args[0])
+                    .then(user => { message.channel.send(`ปลดแบน ${user.username} แล้วค่ะ`) })
+                    .catch(console.error);
             } else {
                 message.channel.send('กรุณาใส่ชื่อคนที่ต้องการแบนด้วยค่ะ')
             }
