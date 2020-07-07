@@ -167,7 +167,7 @@ client.on('message', async message => {
             .then(banned => {
                 let list = "";
                 banned.forEach(element => {
-                    list += "ชื่อผู้ใช้ : " + element.user.username + " (id : " + element.user.id + ")" + "\n"
+                    list += "ชื่อผู้ใช้ : " + element.user.username+"#"+element.user.discriminator + " (id : " + element.user.id + ")" + "\n"
                 });
                 message.channel.send(`**โดนแบนทั้งหมด ${banned.size} บัญชี **: \n${list}`);
             })
