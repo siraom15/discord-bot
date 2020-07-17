@@ -1,1 +1,2 @@
-cd src forever start nodemon --exitcrash app.js
+cd src 
+pm2 start app.js --watch

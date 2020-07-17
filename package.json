@@ -17,7 +17,7 @@
     "forever": "^3.0.0",
     "node-opus": "^0.3.3",
     "nodemon": "^2.0.4",
-    "yt-search": "^1.1.2",
+    "popyt": "^4.1.0",
     "ytdl-core-discord": "github:amishshah/ytdl-core-discord"
   }
 }

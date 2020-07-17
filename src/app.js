@@ -1,9 +1,11 @@
 const Discord = require('discord.js');
 
 
-const { prefix, token, chatchannal } = require('../config.json');
+
+const { prefix, discord_bot_token, chatchannal, youtube_api } = require('../config.json');
+const { YouTube } = require('popyt')
+const youtube = new YouTube(youtube_api)
 const client = new Discord.Client();
-const yts = require('yt-search')
 const ytdl = require('ytdl-core-discord');
 const queue = new Map();
 
@@ -218,13 +220,12 @@ client.on('message', async message => {
 //function เพลง
 async function setQueue(args, message, serverQueue) {
     // รับ Url / ชื่อเพลง
-
     if (args[0].substring(0, 4) !== "http") {
         let name = args.join().split(',').join(' ').trim();
         try {
             message.channel.send(`:mag_right: กำลังค้นหา : \` ${name} \``);
-            let serachInfo = await yts(name);
-            url = serachInfo.videos[0].url;
+            const searchInfo = await youtube.getVideo(name)
+            url = searchInfo.url;
         } catch (err) {
             if (err) console.log(err);
             message.channel.send(`:frowning2:  ไม่พบ : \`${name} กรุณาลองใหม่ค่ะ\``);
@@ -337,7 +338,6 @@ function showQueue(message, serverQueue) {
     const Embed = {
         color: '#108AFC',
         title: `คิวเพลงใน ${message.guild.name} `,
-        // url: 'https://discord.js.org',
         fields: [
             {
                 name: 'ขณะนี้กำลังเล่น',
@@ -390,6 +390,6 @@ client.on('guildMemberAdd', member => {
 });
 
 
-client.login(token);
+client.login(discord_bot_token);
 
 
