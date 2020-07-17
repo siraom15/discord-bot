@@ -7,7 +7,6 @@
 
 ### ขั้นตอนการลง
 * clone/download repository 
-* แตกไฟล์
 * $ npm install 
 * ตั้งค่า Token, Prefix, Bot token, Youtube Api ในไฟล์ config.json 
 
