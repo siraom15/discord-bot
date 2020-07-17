@@ -1,5 +1,5 @@
 # Bot Discord
-## วิธีลง Bot ในเครื่อง
+## วิธีเปิดใช้งาน
 ### สิ่งที่ต้องมี 
 * NodeJS version > 12
 * Discord bot token [Link](https://discord.com/developers/applications)
