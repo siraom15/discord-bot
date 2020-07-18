@@ -13,7 +13,7 @@
 ### วิธีใช้งาน
 #### Run file runbot.bat
 > หรือ
-#### $ cd src node app.js
+#### $ npm start
 
 ### หรือต้องการเชิญ Bot เข้า Discord 
 > [Link](https://discord.com/oauth2/authorize?client_id=718169475777822841&scope=bot&permissions=8)

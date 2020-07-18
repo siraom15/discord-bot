@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node src/app.js"
   },
   "author": "",
   "license": "ISC",
@@ -14,7 +14,6 @@
     "discord.js": "^12.2.0",
     "ffmpeg": "0.0.4",
     "fluent-ffmpeg": "^2.1.2",
-    "forever": "^3.0.0",
     "node-opus": "^0.3.3",
     "nodemon": "^2.0.4",
     "popyt": "^4.1.0",

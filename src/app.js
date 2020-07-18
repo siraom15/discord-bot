@@ -240,7 +240,7 @@ async function setQueue(args, message, serverQueue) {
 
     const song = {
         "title": songInfo.title,
-        "url": songInfo.video_url
+        "url": songInfo.video_url,
     }
 
     //เช็คว่า server นี้มี คิวหรือยัง ถ้าไม่มีให้สรา้ง ถ้ามีให้เพิ่มเข้าคิว
@@ -303,13 +303,14 @@ async function playSong(guild, song) {
     await dispatcher
         .on("start", () => {
             serverQueue.textChannel.send(`:grinning: ขณะนี้กำลังเล่น : \` ${song.title} \``);
+            serverQueue.textChannel.send(`${song.url}`);
         })
         .on("finish", () => {
             serverQueue.songs.shift();
             playSong(guild, serverQueue.songs[0]);
         })
         .on("error", error => console.error(error))
-        .setVolume(0.50);
+        .setVolume(0.2);
 }
 function skip(message, serverQueue) {
     if (!message.member.voice.channel)
@@ -337,30 +338,30 @@ function showQueue(message, serverQueue) {
 
     const Embed = {
         color: '#108AFC',
-        title: `คิวเพลงใน ${message.guild.name} `,
+        title: `:heart_eyes: คิวเพลงใน ${message.guild.name} :heart_eyes: `,
         fields: [
             {
-                name: 'ขณะนี้กำลังเล่น',
+                name: ':play_pause: ขณะนี้กำลังเล่น',
                 value: `${allSong[0].title}`,
             },
             {
                 name: '\u200b',
-                value: 'คิวทั้งหมด',
+                value: ':orange_square: คิวทั้งหมด :orange_square: ',
                 inline: false,
             }
         ],
         timestamp: new Date(),
-        footer: {
-            text: `Source code: 
-github.com/siraom15/discord-bot`,
-            icon_url: 'https://icons-for-free.com/iconfiles/png/512/part+1+github-1320568339880199515.png'
-        },
+//         footer: {
+//             text: `Source code: 
+// github.com/siraom15/discord-bot`,
+//             icon_url: 'https://icons-for-free.com/iconfiles/png/512/part+1+github-1320568339880199515.png'
+//         },
     };
     let i = 1;
     for (var key in allSong) {
         if (allSong.hasOwnProperty(key) & i <= 5) {
+            Embed.fields.push({ name: '\u200b', value: i+" : "+allSong[key].title })
             i++;
-            Embed.fields.push({ name: '\u200b', value: allSong[key].title })
         }
     }
     message.channel.send({ embed: Embed });
