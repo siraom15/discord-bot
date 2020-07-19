@@ -241,6 +241,7 @@ async function setQueue(args, message, serverQueue) {
     const song = {
         "title": songInfo.title,
         "url": songInfo.video_url,
+        "thumbnail": songInfo.playerResponse.videoDetails.thumbnail.thumbnails[4].url
     }
 
     //เช็คว่า server นี้มี คิวหรือยัง ถ้าไม่มีให้สรา้ง ถ้ามีให้เพิ่มเข้าคิว
@@ -302,8 +303,22 @@ async function playSong(guild, song) {
     const dispatcher = serverQueue.connection.play(await ytdl(song.url, { filter: format => ['251'], highWaterMark: 1 << 25 }), { type: 'opus' });
     await dispatcher
         .on("start", () => {
-            serverQueue.textChannel.send(`:grinning: ขณะนี้กำลังเล่น : \` ${song.title} \``);
-            serverQueue.textChannel.send(`${song.url}`);
+            let Songembed = {
+                color: 0x0099ff,
+                title: `:musical_note: : \` ${song.title} \``,
+                url: `${song.url}`,
+                author: {
+                    name: 'ขณะนี้กำลังเล่น',
+                },
+                image: {
+                    url: song.thumbnail,
+                },
+                timestamp: new Date(),
+                
+            };
+            serverQueue.textChannel.send({ embed: Songembed });
+            // serverQueue.textChannel.send(`:grinning: ขณะนี้กำลังเล่น : \` ${song.title} \``);
+            // serverQueue.textChannel.send(`${song.url}`);
         })
         .on("finish", () => {
             serverQueue.songs.shift();
