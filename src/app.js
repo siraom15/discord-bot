@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 
 
-const { prefix, discord_bot_token, chatchannal, youtube_api } = require('../config.json');
+const { prefix, discord_bot_token, chatchannal, youtube_api, client_id } = require('../config.json');
 const { YouTube } = require('popyt')
 const youtube = new YouTube(youtube_api)
 const client = new Discord.Client();
@@ -66,7 +66,7 @@ client.on('message', async message => {
             message.author.send({ embed: Embed })
 
         } else {
-            message.channel.send('ส่งให้ใน direct message แล้วค่ะ :heart_eyes: ')
+            message.channel.send('ส่งให้ใน direct message แล้ว :heart_eyes: ')
             message.author.send({ embed: Embed })
         }
 
@@ -82,7 +82,7 @@ client.on('message', async message => {
         message.channel.send(`เซิฟเวอร์นี้ชื่อ : ${message.guild.name}`);
     }
     else if (command === 'เชิญ') {
-        message.channel.send(`Link เชิญบอท : https://discord.com/oauth2/authorize?client_id=718169475777822841&scope=bot&permissions=8`);
+        message.channel.send(`Link เชิญบอท : https://discord.com/oauth2/authorize?client_id=${client_id}&scope=bot&permissions=8`);
     }
     else if (command === 'สมาชิก') {
         message.channel.send(`สมาชิก : ${message.guild.memberCount} คน`);
@@ -131,16 +131,16 @@ client.on('message', async message => {
                         member
                             .kick('Optional reason that will display in the audit logs')
                             .then(() => {
-                                message.reply(`เตะ ผู้ใช้ ${user.tag} ออกเรียบร้อยแล้วค่ะ`);
+                                message.reply(`เตะ ผู้ใช้ ${user.tag} ออกเรียบร้อยแล้ว`);
                             })
                             .catch(err => {
-                                message.reply('ไม่สามารถเตะ ได้ค่ะ');
+                                message.reply('ไม่สามารถเตะ ได้');
                                 console.error(err);
                             });
                     }
                 }
             } else {
-                message.channel.send('กรุณาใส่ชื่อคนที่ต้องการเตะด้วยค่ะ')
+                message.channel.send('กรุณาใส่ชื่อคนที่ต้องการเตะด้วย')
             }
         }
     }
@@ -154,16 +154,16 @@ client.on('message', async message => {
                         member
                             .ban('Optional reason that will display in the audit logs')
                             .then(() => {
-                                message.reply(`แบน ผู้ใช้ ${user.tag} ออกเรียบร้อยแล้วค่ะ`);
+                                message.reply(`แบน ผู้ใช้ ${user.tag} ออกเรียบร้อยแล้ว`);
                             })
                             .catch(err => {
-                                message.reply('ไม่สามารถแบน ได้ค่ะ');
+                                message.reply('ไม่สามารถแบน ได้');
                                 console.error(err);
                             });
                     }
                 }
             } else {
-                message.channel.send('กรุณาใส่ชื่อคนที่ต้องการแบนด้วยค่ะ')
+                message.channel.send('กรุณาใส่ชื่อคนที่ต้องการแบนด้วย')
             }
         }
     }
@@ -182,10 +182,10 @@ client.on('message', async message => {
         if ((message.member.hasPermission("ADMINISTRATOR"))) {
             if (args.length) {
                 message.guild.members.unban(args[0])
-                    .then(user => { message.channel.send(`ปลดแบน ${user.username} แล้วค่ะ`) })
+                    .then(user => { message.channel.send(`ปลดแบน ${user.username} แล้ว`) })
                     .catch(console.error);
             } else {
-                message.channel.send('กรุณาใส่ชื่อคนที่ต้องการแบนด้วยค่ะ')
+                message.channel.send('กรุณาใส่ชื่อคนที่ต้องการแบนด้วย')
             }
         }
     }
@@ -193,10 +193,10 @@ client.on('message', async message => {
     //ส่วนของเพลง
     else if (command === 'เล่น') {
         if (!message.member.voice.channel) {
-            return message.channel.send(`:worried: กรุณาเข้าห้องแชทด้วยเสียงก่อนค่ะ `);
+            return message.channel.send(`:worried: กรุณาเข้าห้องแชทด้วยเสียงก่อน `);
         }
         if (!args.length) {
-            return message.channel.send(`:worried: โปรดใส่ url เพลงค่ะ`);
+            return message.channel.send(`:worried: โปรดใส่ url เพลง`);
         }
         setQueue(args, message, serverQueue);
         return;
@@ -231,7 +231,7 @@ async function setQueue(args, message, serverQueue) {
             url = searchInfo.url;
         } catch (err) {
             if (err) console.log(err);
-            message.channel.send(`:frowning2:  ไม่พบ : \`${name} กรุณาลองใหม่ค่ะ\``);
+            message.channel.send(`:frowning2:  ไม่พบ : \`${name} กรุณาลองใหม่\``);
             return;
         }
     } else {
@@ -289,7 +289,7 @@ async function setQueue(args, message, serverQueue) {
     // ถ้ามีคิวอยู่แล้ว เพิ่มเข้าคิว 
     else {
         serverQueue.songs.push(song);
-        return message.channel.send(`:grin: \`${song.title}  \`ถูกเพิ่มเข้าคิวแล้วค่ะ `);
+        return message.channel.send(`:grin: \`${song.title}  \`ถูกเพิ่มเข้าคิวแล้ว `);
 
     }
 
@@ -333,23 +333,23 @@ async function playSong(guild, song) {
 function skip(message, serverQueue) {
     if (!message.member.voice.channel)
         return message.channel.send(
-            "คุณต้องอยู่ในห้องสนทนาจึงจะข้ามเพลงได้ค่ะ :smiling_face_with_3_hearts:  "
+            "คุณต้องอยู่ในห้องสนทนาจึงจะข้ามเพลงได้ :smiling_face_with_3_hearts:  "
         );
     if (!serverQueue)
-        return message.channel.send("คิวยังว่างอยู่ค่ะ :laughing: ");
+        return message.channel.send("คิวยังว่างอยู่ :laughing: ");
     serverQueue.connection.dispatcher.end();
 
 }
 function leave(message, serverQueue) {
     if (!message.member.voice.channel)
         return message.channel.send(
-            "คุณต้องอยู่ในห้องสนทนาจึงจะสั่ง เตะฉันได้ค่ะ :triumph: "
+            "คุณต้องอยู่ในห้องสนทนาจึงจะสั่ง เตะฉันได้ :triumph: "
         );
     serverQueue.songs = [];
     serverQueue.connection.dispatcher.end();
 }
 function showQueue(message, serverQueue) {
-    if (!serverQueue) return message.channel.send(':pray: ไม่มีเพลงในคิวค่ะ');
+    if (!serverQueue) return message.channel.send(':pray: ไม่มีเพลงในคิว');
     const guild_id = message.guild.id;
     const queueInfo = queue.get(guild_id);
     const allSong = queueInfo.songs
@@ -391,11 +391,11 @@ function setVolumn(args, message, serverQueue) {
             "คุณต้องอยู่ในห้องสนทนาจึงจะสั่งลดเสียงได้ :triumph: "
         );
     if (!args.length) return;
-    if (isNaN(args[0])) return message.channel.send('กรุณากรอกตัวเลขค่ะ :triumph:');
-    if (args[0]<0||args[0]>100) return message.channel.send('กรุณากรอกตัวเลข 1-100 ค่ะ :triumph:');
+    if (isNaN(args[0])) return message.channel.send('กรุณากรอกตัวเลข :triumph:');
+    if (args[0]<0||args[0]>100) return message.channel.send('กรุณากรอกตัวเลข 1-100  :triumph:');
     let volume = args[0] / 100;
     serverQueue.connection.dispatcher.setVolume(volume);
-    message.channel.send(`ปรับเสียงเป็น ${args[0]} แล้วค่ะ :smiley:`);
+    message.channel.send(`ปรับเสียงเป็น ${args[0]} แล้ว :smiley:`);
 }
 
 
@@ -406,7 +406,7 @@ client.on('guildMemberAdd', member => {
     // Do nothing if the channel wasn't found on this server
     if (!channel) return;
     // Send the message, mentioning the member
-    channel.send(`ยินดีต้อนรับเข้าสู่ Server : ${member.guild.name} ค่ะ, ${member}`);
+    channel.send(`ยินดีต้อนรับเข้าสู่ Server : ${member.guild.name} , ${member}`);
 });
 
 

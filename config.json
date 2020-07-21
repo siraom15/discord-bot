@@ -2,5 +2,6 @@
     "prefix" : "",
     "discord_bot_token" : "",
     "chatchannal" : "",
-    "youtube_api" : ""
+    "youtube_api" : "",
+    "client_id" : ""
 }
