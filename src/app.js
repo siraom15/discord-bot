@@ -392,6 +392,7 @@ function setVolumn(args, message, serverQueue) {
         );
     if (!args.length) return;
     if (isNaN(args[0])) return message.channel.send('กรุณากรอกตัวเลขค่ะ :triumph:');
+    if (args[0]<0||args[0]>100) return message.channel.send('กรุณากรอกตัวเลข 1-100 ค่ะ :triumph:');
     let volume = args[0] / 100;
     serverQueue.connection.dispatcher.setVolume(volume);
     message.channel.send(`ปรับเสียงเป็น ${args[0]} แล้วค่ะ :smiley:`);
