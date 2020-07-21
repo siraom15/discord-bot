@@ -81,6 +81,9 @@ client.on('message', async message => {
     if (command === 'เซิฟ') {
         message.channel.send(`เซิฟเวอร์นี้ชื่อ : ${message.guild.name}`);
     }
+    else if (command === 'เชิญ') {
+        message.channel.send(`Link เชิญบอท : https://discord.com/oauth2/authorize?client_id=718169475777822841&scope=bot&permissions=8`);
+    }
     else if (command === 'สมาชิก') {
         message.channel.send(`สมาชิก : ${message.guild.memberCount} คน`);
     }
@@ -241,7 +244,7 @@ async function setQueue(args, message, serverQueue) {
     const song = {
         "title": songInfo.title,
         "url": songInfo.video_url,
-        "thumbnail": songInfo.playerResponse.videoDetails.thumbnail.thumbnails[4].url
+        "thumbnail": 'https://i.ytimg.com/vi/'+songInfo.video_id+'/maxresdefault.jpg'
     }
 
     //เช็คว่า server นี้มี คิวหรือยัง ถ้าไม่มีให้สรา้ง ถ้ามีให้เพิ่มเข้าคิว
