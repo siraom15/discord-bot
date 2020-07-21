@@ -22,8 +22,17 @@ client.once('reconnecting', () => {
 client.once('disconnect', () => {
     console.log('ออกจากเซิฟเวอร์');
 });
+client.on("guildCreate", guild => {
+    guild.channels.create(chatchannal, { type: 'text' });
+    console.log("สร้าง text channel สำหรับ Bot สำเร็จ เซิฟ : "+guild.name);
+});
 client.on('message', async message => {
+   
     if (!message.content.startsWith(prefix) || message.author.bot) return;
+    if(message.content==='t'){
+        const yourchannel = message.guild.channels.find(channel => channel.name === "say-hi")
+        console.log(yourchannel);
+    }
     if (message.content === 'คำสั่ง') {
 
         const Embed = {
