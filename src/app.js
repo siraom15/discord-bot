@@ -24,14 +24,12 @@ client.once('disconnect', () => {
 });
 client.on("guildCreate", guild => {
     guild.channels.create(chatchannal, { type: 'text' });
-    console.log("สร้าง text channel สำหรับ Bot สำเร็จ เซิฟ : "+guild.name);
+    console.log("สร้าง text channel สำหรับ Bot สำเร็จ เซิฟ : " + guild.name);
 });
 client.on('message', async message => {
-   
+
     if (!message.content.startsWith(prefix) || message.author.bot) return;
-    if(message.content==='t'){
-        const yourchannel = message.guild.channels.find(channel => channel.name === "say-hi")
-        console.log(yourchannel);
+    if (message.content === 'test') {
     }
     if (message.content === 'คำสั่ง') {
 
@@ -181,7 +179,7 @@ client.on('message', async message => {
             .then(banned => {
                 let list = "";
                 banned.forEach(element => {
-                    list += "ชื่อผู้ใช้ : " + element.user.username+"#"+element.user.discriminator + " (id : " + element.user.id + ")" + "\n"
+                    list += "ชื่อผู้ใช้ : " + element.user.username + "#" + element.user.discriminator + " (id : " + element.user.id + ")" + "\n"
                 });
                 message.channel.send(`**โดนแบนทั้งหมด ${banned.size} บัญชี **: \n${list}`);
             })
@@ -248,14 +246,13 @@ async function setQueue(args, message, serverQueue) {
     }
 
     //หา ข้อมูลเพลง
-    const songInfo = await ytdl.getInfo(url);
-
+    const songInfo = await ytdl.getBasicInfo(url);
     const song = {
-        "title": songInfo.title,
-        "url": songInfo.video_url,
-        "thumbnail": 'https://i.ytimg.com/vi/'+songInfo.video_id+'/maxresdefault.jpg'
+        "title": songInfo.videoDetails.title,
+        "url": songInfo.videoDetails.video_url,
+        "thumbnail": 'https://i.ytimg.com/vi/'+songInfo.videoDetails.videoId+'/maxresdefault.jpg'
     }
-
+    console.log(song);
     //เช็คว่า server นี้มี คิวหรือยัง ถ้าไม่มีให้สรา้ง ถ้ามีให้เพิ่มเข้าคิว
     if (!serverQueue) {
         // สร้าง connection
@@ -312,7 +309,9 @@ async function playSong(guild, song) {
         queue.delete(guild.id);
         return;
     }
-    const dispatcher = serverQueue.connection.play(await ytdl(song.url, { filter: format => ['251'], highWaterMark: 1 << 25 }), { type: 'opus' });
+    console.log(song);
+    const dispatcher = await serverQueue.connection.play(await ytdl(song.url, { filter: format => ['251'], highWaterMark: 1 << 25 }), { type: 'opus' });
+    // const dispatcher = await serverQueue.connection.play(await ytdl(song.url), { type: 'opus' });
     await dispatcher
         .on("start", () => {
             let Songembed = {
@@ -326,7 +325,7 @@ async function playSong(guild, song) {
                     url: song.thumbnail,
                 },
                 timestamp: new Date(),
-                
+
             };
             serverQueue.textChannel.send({ embed: Songembed });
             // serverQueue.textChannel.send(`:grinning: ขณะนี้กำลังเล่น : \` ${song.title} \``);
@@ -378,16 +377,20 @@ function showQueue(message, serverQueue) {
             }
         ],
         timestamp: new Date(),
-//         footer: {
+        //         footer: {
+        //             text: `Source code: 
 //             text: `Source code: 
-// github.com/siraom15/discord-bot`,
-//             icon_url: 'https://icons-for-free.com/iconfiles/png/512/part+1+github-1320568339880199515.png'
-//         },
+        //             text: `Source code: 
+//             text: `Source code: 
+        //             text: `Source code: 
+        // github.com/siraom15/discord-bot`,
+        //             icon_url: 'https://icons-for-free.com/iconfiles/png/512/part+1+github-1320568339880199515.png'
+        //         },
     };
     let i = 1;
     for (var key in allSong) {
         if (allSong.hasOwnProperty(key) & i <= 5) {
-            Embed.fields.push({ name: '\u200b', value: i+" : "+allSong[key].title })
+            Embed.fields.push({ name: '\u200b', value: i + " : " + allSong[key].title })
             i++;
         }
     }
@@ -401,7 +404,7 @@ function setVolumn(args, message, serverQueue) {
         );
     if (!args.length) return;
     if (isNaN(args[0])) return message.channel.send('กรุณากรอกตัวเลข :triumph:');
-    if (args[0]<0||args[0]>100) return message.channel.send('กรุณากรอกตัวเลข 1-100  :triumph:');
+    if (args[0] < 0 || args[0] > 100) return message.channel.send('กรุณากรอกตัวเลข 1-100  :triumph:');
     let volume = args[0] / 100;
     serverQueue.connection.dispatcher.setVolume(volume);
     message.channel.send(`ปรับเสียงเป็น ${args[0]} แล้ว :smiley:`);

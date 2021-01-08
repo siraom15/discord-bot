@@ -5,19 +5,20 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/app.js"
+    "start": "nodemon src/app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@discordjs/opus": "^0.3.2",
-    "discord.js": "^12.2.0",
+    "@discordjs/opus": "^0.3.3",
+    "discord.js": "^12.5.1",
     "ffmpeg": "0.0.4",
-    "ffmpeg-static": "^4.2.5",
+    "ffmpeg-static": "^4.2.7",
     "fluent-ffmpeg": "^2.1.2",
     "node-opus": "^0.3.3",
-    "nodemon": "^2.0.4",
-    "popyt": "^4.1.0",
+    "nodemon": "^2.0.7",
+    "popyt": "^4.2.0",
+    "ytdl-core": "^4.4.1",
     "ytdl-core-discord": "github:amishshah/ytdl-core-discord"
   }
 }
