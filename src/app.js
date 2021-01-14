@@ -101,16 +101,15 @@ client.on('message', async message => {
         message.channel.send(`สวัสดี ${message.author.username}`);
     }
     else if (command === 'กินไรดี') {
-        let food = ["กะหรี่ปั๊บ", "แกงบอน", "แกงป่า", "แกงเขียวหวาน", "แกงไตปลา", "แกงส้ม", "แกงเผ็ดเป็ดย่าง", "แกงเลียง", "แกงมัสมั่น", "แกงเหลือง", "แกงเทโพ", "แกงจืด", "แกงโฮะ", "กุนเชียง", "แกงไก่", "กุ้งพริกไทย", "กุ้งชุบแป้งทอด", "กุ้งแช่น้ำปลา", "ไก่อบพริกไทยดำ", "แกงกะหรี่ไก่", "ขนมจีน", "ข้าวคลุกกะปิ", "ข้าวผัดสับปะรด", "ข้าวมันไก่", "ข้าวยำ", "ข้าวห่อใบบัว", "ไข่เจียว", "ไข่ต้ม", "ไข่ลูกเขย", "ไข่พะโล้หมูสามชั้น", "ข้าวแช", "ต้มยำ", "ต้มยำแซบ", "ต้มข่า", "ต้มจืด", "ผัดกระเพรา", "ผัดขี้เมา", "ผัดไท", "ผัดซีอิ้ว", "ผัดฉ่า", "ผัดวุ้นเส้น", "ผักบุ้งไฟแดง", "ผักคะน้าปลาเค็ม", "ส้มตำ", "สุกีไทย", "ลาบ", "ราดหน้า", "ห่อหมก", "ปลาร้าทรงเครื่อง", "ปลาราดพริก", "พะแนง", "พะแนงไก่", "พล่าเนื้อ", "ยำใหญ่", "ยำทวาย", "แหนม", "ปูจ๋า", "ปูนิ่มผัดพริกไทดำ", "ตำผลไม้", "บะหมี่หมูแดง", "หมูกะทะ", "หอยหลอดผัดฉ่า", "ไก่ต้มน้ำปลา", "ไก่อบฟาง", "ไก่ทอดน้ำปลา", "ปลากระพงทอดน้ำปลา", "งบปลา", "คั่วกลิ้งหมู", "หลนปูเค็ม", "แจงลอน", "หรุ่ม", "ล่าเตียง", "สาคูไส้หมู", "ปลาทับทิมลุยสวน", "แกงเทโพหมู", "ผัดกระเพราหมู"];
-        const random = food[Math.floor(Math.random() * food.length)];
+        let data = require('./data/food')
+        // console.log(food.food);
+        const random = data.food[Math.floor(Math.random() * data.food.length)];
         message.channel.send(`งั้น... ${random} ก็น่าสนใจนะ`)
     }
     else if (command === 'หิว') {
         message.channel.send('ไปกินข้าวกับเราไหม :)');
     }
     else if (command === 'เตะะ') {
-        // grab the "first" mentioned user from the message
-        // this will return a `User` object, just like `message.author`
         const taggedUser = message.mentions.users.first();
 
         message.channel.send(`อยากเตะ${taggedUser.username} เหมือนกัน`);
@@ -124,8 +123,6 @@ client.on('message', async message => {
             return `รูปของ ${user.username}: <${user.displayAvatarURL({ format: "png", dynamic: true })}>`;
         });
 
-        // send the entire array of strings as a message
-        // by default, discord.js will `.join()` the array with `\n`
         message.channel.send(avatarList);
     }
     else if (command === 'เตะ') {
@@ -196,7 +193,65 @@ client.on('message', async message => {
             }
         }
     }
+    else if (command === 'ดูดวง') {
+        let now = new Date();
+        let thday = new Array("อาทิตย์", "จันทร์",
+            "อังคาร", "พุธ", "พฤหัส", "ศุกร์", "เสาร์");
+        let thmonth = new Array("มกราคม", "กุมภาพันธ์", "มีนาคม",
+            "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน",
+            "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
 
+        let dateStr = "วัน" + thday[now.getDay()] + "ที่ " + now.getDate() + " " +
+            thmonth[now.getMonth()];
+        function createStar(i) {
+            let star = ""
+            for (j = 0; j < i; j++) {
+                star += "⭐"
+            }
+            return star
+        }
+        function random5() {
+            return Math.floor(Math.random() * 5) + 1
+        }
+        let horo = {
+            color: 0x0099ff,
+            title: `ดวงประจำวันที่ : ${dateStr} `,
+            author: {
+                name: 'Bot ดูดวง',
+            },
+            fields: [
+                {
+                    name: 'ความรัก',
+                    value: createStar(random5()),
+                    inline: true,
+                },
+                {
+                    name: 'การงาน',
+                    value: createStar(random5()),
+
+                    inline: true,
+                },
+                {
+                    name: 'สุขภาพ',
+                    value: createStar(random5()),
+
+                    inline: true,
+                },
+            ],
+            timestamp: new Date(),
+
+        };
+        message.reply({ embed: horo });
+    }
+    else if (command === 'ด่า') {
+        if (args.length) {
+            const user = message.mentions.users.first();
+            if (user) {
+                message.channel.send("ไอ้ต้าวน่ารัก "+"<@" + user.id + ">");
+            }
+        }
+
+    }
     //ส่วนของเพลง
     else if (command === 'เล่น') {
         if (!message.member.voice.channel) {
@@ -214,6 +269,7 @@ client.on('message', async message => {
     }
     else if (command === 'ออกไป') {
         leave(message, serverQueue);
+        message.reply("ออกก็ได้ :pleading_face: ")
         return;
     }
     else if (command === 'คิว') {
@@ -232,6 +288,7 @@ async function setQueue(args, message, serverQueue) {
     // รับ Url / ชื่อเพลง
     if (args[0].substring(0, 4) !== "http") {
         let name = args.join().split(',').join(' ').trim();
+        // name = encodeURI(name);
         try {
             message.channel.send(`:mag_right: กำลังค้นหา : \` ${name} \``);
             const searchInfo = await youtube.getVideo(name)
@@ -250,7 +307,7 @@ async function setQueue(args, message, serverQueue) {
     const song = {
         "title": songInfo.videoDetails.title,
         "url": songInfo.videoDetails.video_url,
-        "thumbnail": 'https://i.ytimg.com/vi/'+songInfo.videoDetails.videoId+'/maxresdefault.jpg'
+        "thumbnail": 'https://i.ytimg.com/vi/' + songInfo.videoDetails.videoId + '/maxresdefault.jpg'
     }
     console.log(song);
     //เช็คว่า server นี้มี คิวหรือยัง ถ้าไม่มีให้สรา้ง ถ้ามีให้เพิ่มเข้าคิว
@@ -379,9 +436,9 @@ function showQueue(message, serverQueue) {
         timestamp: new Date(),
         //         footer: {
         //             text: `Source code: 
-//             text: `Source code: 
         //             text: `Source code: 
-//             text: `Source code: 
+        //             text: `Source code: 
+        //             text: `Source code: 
         //             text: `Source code: 
         // github.com/siraom15/discord-bot`,
         //             icon_url: 'https://icons-for-free.com/iconfiles/png/512/part+1+github-1320568339880199515.png'
