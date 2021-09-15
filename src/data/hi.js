@@ -1,0 +1,26 @@
+let hi = [
+    "สวัสดี",
+    "hello",
+    "Bonjour",
+    "Salut",
+    "Hola",
+    "¿Qué tal?",
+    "Zdravstvuyte",
+    "Privet",
+    "Nǐn hǎo",
+    "Nǐ hǎo",
+    "Salve",
+    "Ciao",
+    "Konnichiwa",
+    "Yā",
+    "Yō",
+    "Guten Tag",
+    "Hallo, Hi",
+    "Olá",
+    "Oi",
+    "Anyoung haseyo",
+    "Anyoung",
+    "Asalaam alaikum",
+    "Ahlan"
+];
+module.exports = hi;
