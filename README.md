@@ -1,19 +1,19 @@
 # Bot Discord
-## วิธีเปิดใช้งาน
-### สิ่งที่ต้องมี 
-* NodeJS version > 12
+## Require
+* NodeJS version 12^
 * Discord bot token [Link](https://discord.com/developers/applications)
 * Youtube Data API V3 
 
-### ขั้นตอนการลง
+## Install
 * clone/download repository 
-* $ npm install 
-* ตั้งค่า Token, Prefix, Bot token, Youtube Api ในไฟล์ config.json 
+* npm install 
+* setting Token, Prefix, Bot token, Youtube Api In config.json 
 
-### วิธีใช้งาน
-#### Run file runbot.bat
-> หรือ
-#### $ npm start
+### HowTo Use
 
-### หรือต้องการเชิญ Bot เข้า Discord 
-> [Link](https://discord.com/oauth2/authorize?client_id=718169475777822841&scope=bot&permissions=8)
+```bash
+$ npm start
+```
+## Invite Link Discord 
+
+[Invite Link Discord](https://discord.com/oauth2/authorize?client_id=718169475777822841&scope=bot&permissions=8)
