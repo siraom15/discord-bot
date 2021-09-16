@@ -1,6 +1,5 @@
 let showQueue = (message, serverQueue, queue) => {
     if (!serverQueue.songs) return message.channel.send(':pray: ไม่มีเพลงในคิว');
-    console.log(serverQueue);
     const guild_id = message.guild.id;
     const queueInfo = queue.get(guild_id);
     const allSong = queueInfo.songs

@@ -14,7 +14,6 @@ let setQueue = async (args, message, serverQueue, queue) => {
             const searchInfo = await youtube.getVideo(name)
             url = searchInfo.url;
         } catch (err) {
-            if (err) console.log(err);
             message.channel.send(`:frowning2: ไม่พบ : \`${name} กรุณาลองใหม่\``);
             return;
         }
@@ -46,7 +45,6 @@ let setQueue = async (args, message, serverQueue, queue) => {
             playSong(message.guild, queueConstructor.songs[0], queue);
 
         } catch (err) {
-            console.log(err);
             queue.delete(message.guild.id);
             return message.channel.send(err);
         }

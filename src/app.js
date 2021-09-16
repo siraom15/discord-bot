@@ -9,20 +9,26 @@ const queue = new Map();
 const functions = require('./function/functions');
 
 client.once('ready', () => {
-    console.log('พร้อม!');
     client.user.setStatus('online')
     client.user.setActivity('พิมพ์ คำสั่ง เพื่อรับคำสั่งบอท')
+    client.user.setPresence({ activities: [{ name: 'Hello World 😀' }] });
+    console.log('พร้อม!');
 
 });
 client.once('reconnecting', () => {
-    console.log('กำลังเชื่อมต่อใหม่...');
+    console.log('Reconnecting...');
 });
 client.once('disconnect', () => {
-    console.log('ออกจากเซิฟเวอร์');
+    console.log('Leave Server');
 });
 client.on("guildCreate", guild => {
     guild.channels.create(chatchannal, { type: 'text' });
     console.log("สร้าง text channel สำหรับ Bot สำเร็จ เซิฟ : " + guild.name);
+});
+client.on('guildMemberAdd', member => {
+    const channel = member.guild.channels.cache.find(ch => ch.name === `${chatchannal}`);
+    if (!channel) return;
+    channel.send(`ยินดีต้อนรับเข้าสู่ Server : ${member.guild.name} , ${member}`);
 });
 client.on('message', async message => {
     if (!message.guild) return;
@@ -94,11 +100,7 @@ client.on('message', async message => {
             break;
     }
 });
-client.on('guildMemberAdd', member => {
-    const channel = member.guild.channels.cache.find(ch => ch.name === `${chatchannal}`);
-    if (!channel) return;
-    channel.send(`ยินดีต้อนรับเข้าสู่ Server : ${member.guild.name} , ${member}`);
-});
+
 client.login(discord_bot_token);
 
 
