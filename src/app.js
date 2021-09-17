@@ -86,9 +86,9 @@ client.on('message', async message => {
         case 'ข้าม':
             functions.skipSong(message, serverQueue);
             break;
-        // case 'ออกไป':
-        //     functions.disconnect(message, serverQueue);
-        //     break;
+        case 'ออกไป':
+            functions.disconnect(message, serverQueue);
+            break;
         case 'คิว':
             functions.showQueue(message, serverQueue, queue);
             break;
@@ -96,7 +96,7 @@ client.on('message', async message => {
             functions.setVolumn(args, message, serverQueue);
             break;
         case 'ล้างคิว':
-            functions.clearQueue(serverQueue)
+            functions.clearQueue(message,serverQueue)
             break;
         case 'runjs':
             functions.runJs(message, args);

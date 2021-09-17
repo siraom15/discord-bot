@@ -3,7 +3,12 @@ let leave = (message, serverQueue) => {
         return message.channel.send(
             "คุณต้องอยู่ในห้องสนทนาจึงจะสั่ง เตะฉันได้ :triumph: "
         );
-    serverQueue.songs = [];
-    serverQueue.connection.dispatcher.end();
+    try {
+        serverQueue.songs = [];
+        serverQueue.connection.dispatcher.end();
+    } catch (err) {
+        console.log(err);
+    }
+
 }
 module.exports = leave;
