@@ -26,7 +26,9 @@ let setQueue = async (args, message, serverQueue, queue) => {
     const song = {
         "title": songInfo.videoDetails.title,
         "url": songInfo.videoDetails.video_url,
-        "thumbnail": 'https://i.ytimg.com/vi/' + songInfo.videoDetails.videoId + '/maxresdefault.jpg'
+        "thumbnail": 'https://i.ytimg.com/vi/' + songInfo.videoDetails.videoId + '/maxresdefault.jpg',
+        "requestBy": `${message.author.username}#${message.author.discriminator}`,
+        "moreInfo" : songInfo.videoDetails
     }
     if (!serverQueue) {
         const voiceChannel = message.member.voice.channel;
@@ -50,11 +52,10 @@ let setQueue = async (args, message, serverQueue, queue) => {
             queue.delete(message.guild.id);
             return message.channel.send(err);
         }
-
     }
     else {
         serverQueue.songs.push(song);
-        return message.channel.send(`:grin: \`${song.title}  \`ถูกเพิ่มเข้าคิวแล้ว `);
+        return message.channel.send(`:grin: \`${song.title}\`ถูกเพิ่มเข้าคิวแล้ว ขอโดย ${song.requestBy}`);
     }
 }
 module.exports = setQueue;

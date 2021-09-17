@@ -14,16 +14,34 @@ let playSong = async (guild, song, queue) => {
     await dispatcher
         .on("start", () => {
             let Songembed = {
-                color: 0x0099ff,
-                title: `:musical_note: : \` ${song.title} \``,
+                color: "#4b8f7f",
+                title: `:musical_note: :  ${song.title}`,
                 url: `${song.url}`,
                 author: {
-                    name: 'ขณะนี้กำลังเล่น',
+                    name: 'ขณะนี้กำลังเล่น 🎵🎵🎵',
                 },
                 image: {
                     url: song.thumbnail,
                 },
-                timestamp: new Date(),
+                fields: [
+                    {
+                        name: ':pencil2: ขอโดย 👤➕',
+                        value: `${song.requestBy}`,
+                    },
+                    {
+                        name: 'ความยาวเพลง ⌚⏳',
+                        value: `${Math.floor(song.moreInfo.lengthSeconds / 60)}:${song.moreInfo.lengthSeconds - (60 * Math.floor(song.moreInfo.lengthSeconds / 60))}`,
+                        inline: true,
+                    },
+                    {
+                        name: 'Channel',
+                        value: `${song.moreInfo.ownerChannelName}`,
+                        inline: true,
+                    },
+                ],
+                footer: {
+                    text: 'Enjoy Music - aommie bot',
+                },
             };
             serverQueue.textChannel.send({ embed: Songembed });
         })

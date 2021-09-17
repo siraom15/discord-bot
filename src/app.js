@@ -11,8 +11,7 @@ const functions = require('./function/functions');
 client.once('ready', () => {
     client.user.setStatus('online')
     client.user.setActivity('พิมพ์ คำสั่ง เพื่อรับคำสั่งบอท')
-    console.log('พร้อม!');
-
+    console.log('Bot running / บอททำงานแล้ว !!');
 });
 client.once('reconnecting', () => {
     console.log('Reconnecting...');
