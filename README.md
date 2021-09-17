@@ -1,8 +1,8 @@
-# Bot Discord
-## Require
-* NodeJS version 12^
+# Bot Discord by aommie
+## Requirement
+* NodeJS version 12+
 * Discord bot token [Link](https://discord.com/developers/applications)
-* Youtube Data API V3 
+* Youtube Data API V3 [Link](https://developers.google.com/youtube/v3)
 
 ## Install
 * clone/download repository 
@@ -12,7 +12,13 @@
 ### HowTo Use
 
 ```bash
+$ npm install
 $ npm start
+```
+or
+```
+$ yarn
+$ yarn start
 ```
 ## Invite Link Discord 
 
