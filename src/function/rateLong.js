@@ -8,7 +8,7 @@ let rateLong = (message, args) => {
         return message.reply(`\`\`\`ขนาดน้องของ ${message.author.username}\n${str} (${length} นิ้ว)\`\`\``);
     } else {
         let name = [...message.mentions.users][0][1].username   
-        return message.channel.send(`\`\`\`ขนาดน้องของ ${name} ❤❤\n${str} (${length} นิ้ว)\`\`\``);
+        return message.channel.send(`\`\`\`ขนาดน้องของ ${name}\n${str} (${length} นิ้ว)\`\`\``);
     }
 }
 module.exports = rateLong;

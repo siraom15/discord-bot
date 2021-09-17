@@ -1,4 +1,4 @@
-let random = (max) => Math.floor(Math.random() * max) + 1
+let random = require('../utils/random');
 
 let getHoro = (message) => {
     let now = new Date();
@@ -27,15 +27,15 @@ let getHoro = (message) => {
         fields: [
             {
                 name: 'ความรัก',
-                value: createStar(random(6)),
+                value: createStar(random(1,6)),
             },
             {
                 name: 'การงาน',
-                value: createStar(random(6)),
+                value: createStar(random(1,6)),
             },
             {
                 name: 'สุขภาพ',
-                value: createStar(random(6)),
+                value: createStar(random(1,6)),
             },
         ],
         timestamp: new Date(),
