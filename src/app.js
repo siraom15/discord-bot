@@ -11,7 +11,6 @@ const functions = require('./function/functions');
 client.once('ready', () => {
     client.user.setStatus('online')
     client.user.setActivity('พิมพ์ คำสั่ง เพื่อรับคำสั่งบอท')
-    client.user.setPresence({ activities: [{ name: 'Hello World 😀' }] });
     console.log('พร้อม!');
 
 });
@@ -81,12 +80,15 @@ client.on('message', async message => {
         case 'เล่น':
             functions.setQueue(args, message, serverQueue, queue);
             break;
+        case 'เพลง':
+            functions.setQueue(args, message, serverQueue, queue);
+            break;
         case 'ข้าม':
             functions.skipSong(message, serverQueue);
             break;
-        case 'ออกไป':
-            functions.disconnect(message, serverQueue);
-            break;
+        // case 'ออกไป':
+        //     functions.disconnect(message, serverQueue);
+        //     break;
         case 'คิว':
             functions.showQueue(message, serverQueue, queue);
             break;
@@ -95,6 +97,9 @@ client.on('message', async message => {
             break;
         case 'ล้างคิว':
             functions.clearQueue(serverQueue)
+            break;
+        case 'runjs':
+            functions.runJs(message, args);
             break;
         default:
             break;

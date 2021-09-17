@@ -8,12 +8,13 @@ let setQueue = async (args, message, serverQueue, queue) => {
     // รับ Url / ชื่อเพลง
     if (!args.length) return message.reply("ใส่ชื่อเพลงด้วยนะ หรือลิ้งค์ Youtube ก็ได้นะ");
     if (args[0].substring(0, 4) !== "http") {
-        let name = args.join("").trim();
+        let name = args.join(" ").trim();
         try {
             message.channel.send(`:mag_right: กำลังค้นหา : \` ${name} \``);
             const searchInfo = await youtube.getVideo(name)
             url = searchInfo.url;
         } catch (err) {
+            console.log(err);
             message.channel.send(`:frowning2: ไม่พบ : \`${name} กรุณาลองใหม่\``);
             return;
         }
@@ -45,6 +46,7 @@ let setQueue = async (args, message, serverQueue, queue) => {
             playSong(message.guild, queueConstructor.songs[0], queue);
 
         } catch (err) {
+            console.log(err);
             queue.delete(message.guild.id);
             return message.channel.send(err);
         }
