@@ -93,12 +93,10 @@ client.on('message', async message => {
         case 'ล้างคิว':
             functions.clearQueue(message,serverQueue)
             break;
-        case 'runjs':
-            functions.runJs(message, args);
-            break;
         case 'ขนาด' :
             functions.rateLong(message,args);
         default:
+            functions.handleCommonText(message);
             break;
     }
 });
