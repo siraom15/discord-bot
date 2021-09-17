@@ -1,10 +1,6 @@
 const Discord = require('discord.js');
-
-const { prefix, discord_bot_token, chatchannal, youtube_api, client_id } = require('../config.json');
-const { YouTube } = require('popyt')
-const youtube = new YouTube(youtube_api)
+const { prefix, discord_bot_token, chatchannal, client_id } = require('../config.json');
 const client = new Discord.Client();
-const ytdl = require('ytdl-core-discord');
 const queue = new Map();
 const functions = require('./function/functions');
 
@@ -14,10 +10,10 @@ client.once('ready', () => {
     console.log('Bot running / บอททำงานแล้ว !!');
 });
 client.once('reconnecting', () => {
-    console.log('Reconnecting...');
+    console.log('เชื่อมต่อใหม่...');
 });
 client.once('disconnect', () => {
-    console.log('Leave Server');
+    console.log('ออกจาก Server');
 });
 client.on("guildCreate", guild => {
     guild.channels.create(chatchannal, { type: 'text' });
@@ -31,9 +27,9 @@ client.on('guildMemberAdd', member => {
 client.on('message', async message => {
     if (!message.guild) return;
     if (!message.content.startsWith(prefix) || message.author.bot) return;
+
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
-
     const serverQueue = queue.get(message.guild.id);
 
     switch (command) {
