@@ -100,6 +100,8 @@ client.on('message', async message => {
         case 'runjs':
             functions.runJs(message, args);
             break;
+        case 'ขนาด' :
+            functions.rateLong(message,args);
         default:
             break;
     }
