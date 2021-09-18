@@ -11,11 +11,11 @@ let setQueue = async (args, message, serverQueue, queue) => {
     if (args[0].substring(0, 4) !== "http") {
         let name = args.join(" ").trim();
         try {
-            message.channel.send(`:mag_right: กำลังค้นหา : \` ${name} \``);
+            message.channel.send(`\`\`\`:mag_right: กำลังค้นหา :${name}\`\`\``);
             const searchInfo = await youtube.getVideo(name)
             url = searchInfo.url;
         } catch (err) {
-            message.channel.send(`:frowning2: ไม่พบ : \`${name}\` กรุณาลองใหม่`);
+            message.channel.send(`\`\`\`:frowning2: ไม่พบ : ${name} กรุณาลองใหม่\`\`\``);
             return;
         }
     } else {
@@ -55,7 +55,7 @@ let setQueue = async (args, message, serverQueue, queue) => {
     }
     else {
         serverQueue.songs.push(song);
-        return message.channel.send(`:grin: \`${song.title}\`ถูกเพิ่มเข้าคิวแล้ว ขอโดย ${song.requestBy}`);
+        return message.channel.send(`\`\`\`:grin: ${song.title}ถูกเพิ่มเข้าคิวแล้ว ขอโดย ${song.requestBy}\`\`\``);
     }
 }
 module.exports = setQueue;

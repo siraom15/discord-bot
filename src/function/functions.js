@@ -21,6 +21,7 @@ const disconnect = require('./musics/disconnect');
 const clearQueue = require('./musics/clearQueue')
 const rateLong = require('./rateLong')
 const handleCommonText = require('./handleCommonText')
+const getAuditLog = require('./getAuditLog')
 
 module.exports = {
     getAllCommand,
@@ -45,5 +46,6 @@ module.exports = {
     disconnect,
     clearQueue,
     rateLong,
-    handleCommonText
+    handleCommonText,
+    getAuditLog
 }

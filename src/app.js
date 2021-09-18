@@ -21,7 +21,7 @@ client.on("guildCreate", guild => {
 });
 client.on('guildMemberAdd', member => {
     const channel = member.guild.channels.cache.find(ch => ch.name === `${chatchannal}`);
-    if (!channel) return guild.channels.create(chatchannal, { type: 'text' });
+    if (!channel) return;
     channel.send(`ยินดีต้อนรับเข้าสู่ Server : ${member.guild.name} , ${member}`);
 });
 client.on('message', async message => {
@@ -95,6 +95,10 @@ client.on('message', async message => {
             break;
         case 'ขนาด':
             functions.rateLong(message, args);
+            break;
+        case 'ประวัติ' :
+            functions.getAuditLog(message);
+            break;
         default:
             functions.handleCommonText(message);
             break;

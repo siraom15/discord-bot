@@ -6,17 +6,17 @@ let kickMember = (args, message) => {
                 const member = message.guild.member(user);
                 if (member) {
                     member
-                        .kick('Optional reason that will display in the audit logs')
+                        .kick(`เตะโดย Bot สั่งโดย ${message.author.username}`)
                         .then(() => {
-                            message.reply(`เตะ ผู้ใช้ ${user.tag} ออกเรียบร้อยแล้ว`);
+                            message.reply(`\`\`\`เตะ ผู้ใช้ ${user.tag} ออกเรียบร้อยแล้ว สั่งโดย ${message.author.username}\`\`\``);
                         })
                         .catch(err => {
-                            message.reply('ไม่สามารถเตะได้');
+                            message.reply('\`\`\`ไม่สามารถเตะได้\`\`\`');
                         });
                 }
             }
         } else {
-            message.channel.send('กรุณาใส่ชื่อคนที่ต้องการเตะด้วย')
+            message.channel.send('\`\`\`กรุณาใส่ชื่อคนที่ต้องการเตะด้วย\`\`\`')
         }
     } else {
         message.reply(`แกกกก ไม่มีสิทธิ์ !!!`,
