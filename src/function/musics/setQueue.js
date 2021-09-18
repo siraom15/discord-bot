@@ -6,7 +6,8 @@ const playSong = require('./playSong');
 
 let setQueue = async (args, message, serverQueue, queue) => {
     // รับ Url / ชื่อเพลง
-    if (!args.length) return message.reply("ใส่ชื่อเพลงด้วยนะ หรือลิ้งค์ Youtube ก็ได้นะ");
+    if (!args.length) return message.reply("❗❗ ใส่ชื่อเพลงด้วยนะ หรือลิ้งค์ Youtube ก็ได้นะ");
+    let url = null;
     if (args[0].substring(0, 4) !== "http") {
         let name = args.join(" ").trim();
         try {
@@ -14,7 +15,6 @@ let setQueue = async (args, message, serverQueue, queue) => {
             const searchInfo = await youtube.getVideo(name)
             url = searchInfo.url;
         } catch (err) {
-            console.log(err);
             message.channel.send(`:frowning2: ไม่พบ : \`${name} กรุณาลองใหม่\``);
             return;
         }

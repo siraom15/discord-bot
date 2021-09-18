@@ -21,7 +21,7 @@ client.on("guildCreate", guild => {
 });
 client.on('guildMemberAdd', member => {
     const channel = member.guild.channels.cache.find(ch => ch.name === `${chatchannal}`);
-    if (!channel) return;
+    if (!channel) return guild.channels.create(chatchannal, { type: 'text' });
     channel.send(`ยินดีต้อนรับเข้าสู่ Server : ${member.guild.name} , ${member}`);
 });
 client.on('message', async message => {
@@ -45,7 +45,7 @@ client.on('message', async message => {
         case 'สมาชิก':
             functions.getMemberCount(message);
             break;
-        case 'ข้อมูลฉัน':
+        case 'ข้อมูล':
             functions.getUserData(message);
             break;
         case 'สวัสดี':
@@ -91,10 +91,10 @@ client.on('message', async message => {
             functions.setVolumn(args, message, serverQueue);
             break;
         case 'ล้างคิว':
-            functions.clearQueue(message,serverQueue)
+            functions.clearQueue(message, serverQueue)
             break;
-        case 'ขนาด' :
-            functions.rateLong(message,args);
+        case 'ขนาด':
+            functions.rateLong(message, args);
         default:
             functions.handleCommonText(message);
             break;
