@@ -7,7 +7,7 @@ let banMember = (args, message) => {
                 if (member) {
                     member
                         .ban({
-                            reason: 'โดนแบนไม่มีเหตุผล',
+                            reason: `โดนแบนโดย Bot สั่งโดย${message.author.username}`,
                         })
                         .then(() => {
                             message.reply(`แบนผู้ใช้ ${user.tag} ออกเรียบร้อยแล้ว`);
