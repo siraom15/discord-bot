@@ -5,17 +5,16 @@ const ytdl = require('ytdl-core-discord');
 const playSong = require('./playSong');
 
 let setQueue = async (args, message, serverQueue, queue) => {
-    // รับ Url / ชื่อเพลง
     if (!args.length) return message.reply("❗❗ ใส่ชื่อเพลงด้วยนะ หรือลิ้งค์ Youtube ก็ได้นะ");
     let url = null;
     if (args[0].substring(0, 4) !== "http") {
         let name = args.join(" ").trim();
         try {
-            message.channel.send(`\`\`\`:mag_right: กำลังค้นหา :${name}\`\`\``);
+            message.channel.send(`\`\`\`🔎🎵 กำลังค้นหา : ${name} 🎵🔎\`\`\``);
             const searchInfo = await youtube.getVideo(name)
             url = searchInfo.url;
         } catch (err) {
-            message.channel.send(`\`\`\`:frowning2: ไม่พบ : ${name} กรุณาลองใหม่\`\`\``);
+            message.channel.send(`\`\`\`⛔🎵 ไม่พบ : ${name} กรุณาลองใหม่ 🎵⛔\`\`\``);
             return;
         }
     } else {
@@ -55,7 +54,7 @@ let setQueue = async (args, message, serverQueue, queue) => {
     }
     else {
         serverQueue.songs.push(song);
-        return message.channel.send(`\`\`\`:grin: ${song.title}ถูกเพิ่มเข้าคิวแล้ว ขอโดย ${song.requestBy}\`\`\``);
+        return message.channel.send(`\`\`\`🎵🎵 ${song.title}ถูกเพิ่มเข้าคิวแล้ว ขอโดย ${song.requestBy} 🎵🎵\`\`\``);
     }
 }
 module.exports = setQueue;
