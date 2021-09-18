@@ -19,9 +19,9 @@ const showQueue = require('./musics/showQueue');
 const skipSong = require('./musics/skip');
 const disconnect = require('./musics/disconnect');
 const clearQueue = require('./musics/clearQueue')
-// const runJs = require('./runJs');
 const rateLong = require('./rateLong')
 const handleCommonText = require('./handleCommonText')
+
 module.exports = {
     getAllCommand,
     help,
@@ -44,7 +44,6 @@ module.exports = {
     skipSong,
     disconnect,
     clearQueue,
-    // runJs
     rateLong,
     handleCommonText
 }

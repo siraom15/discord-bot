@@ -19,7 +19,8 @@ let kickMember = (args, message) => {
             message.channel.send('กรุณาใส่ชื่อคนที่ต้องการเตะด้วย')
         }
     } else {
-        message.reply(`แกกกก ไม่มีสิทธิ์ !!!`, { files :['https://p.ptcdn.info/206/012/000/2638349_01434701901579410397_IMG-1289-PNG_l.jpg'] })
+        message.reply(`แกกกก ไม่มีสิทธิ์ !!!`,
+            { files: ['https://p.ptcdn.info/206/012/000/2638349_01434701901579410397_IMG-1289-PNG_l.jpg'] })
     }
 }
 module.exports = kickMember;

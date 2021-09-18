@@ -15,7 +15,7 @@ let setQueue = async (args, message, serverQueue, queue) => {
             const searchInfo = await youtube.getVideo(name)
             url = searchInfo.url;
         } catch (err) {
-            message.channel.send(`:frowning2: ไม่พบ : \`${name} กรุณาลองใหม่\``);
+            message.channel.send(`:frowning2: ไม่พบ : \`${name}\` กรุณาลองใหม่`);
             return;
         }
     } else {

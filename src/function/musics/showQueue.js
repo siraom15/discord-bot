@@ -1,5 +1,5 @@
 let showQueue = (message, serverQueue, queue) => {
-    if (!serverQueue) return message.channel.send('⛔ ไม่มีเพลงในคิว ⛔ \n✅ขอเพลงโดยใช้ `เล่น + ชื่อเพลง/link youtube` ได้นะ 😁');
+    if (!serverQueue) return message.channel.send('```⛔ ไม่มีเพลงในคิว ⛔ \n✅ขอเพลงโดยใช้ เล่น + ชื่อเพลง/link youtube ได้นะ 😁```');
     const guild_id = message.guild.id;
     const queueInfo = queue.get(guild_id);
     const allSong = queueInfo.songs;
