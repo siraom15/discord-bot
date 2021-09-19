@@ -1,4 +1,4 @@
-let random = require('../utils/random');
+let random = require('../../utils/random');
 
 let getHoro = (message) => {
     let now = new Date();
