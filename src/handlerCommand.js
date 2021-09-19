@@ -12,7 +12,7 @@ let handlerCommand = (message, queue) => {
             functions.getAllCommand(message);
             break;
         case 'เซิฟ':
-            functions.getServerName(message);
+            functions.getServerInfo(message);
             break;
         case 'เชิญ':
             functions.getInviteLink(message, client_id);
@@ -30,7 +30,7 @@ let handlerCommand = (message, queue) => {
             functions.randomFood(message);
             break;
         case 'รูป':
-            functions.getPic(message);
+            functions.getUserPic(message);
             break;
         case 'เตะ':
             functions.kickMember(args, message);
