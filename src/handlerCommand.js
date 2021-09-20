@@ -57,7 +57,7 @@ let handlerCommand = (message, queue) => {
             functions.skipSong(message, serverQueue);
             break;
         case 'ออกไป':
-            functions.disconnect(message, serverQueue);
+            functions.disconnect(message, serverQueue, queue);
             break;
         case 'คิว':
             functions.showQueue(message, serverQueue, queue);
