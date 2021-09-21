@@ -6,7 +6,7 @@ let deleteSong = (args, message, serverQueue) => {
     try {
         let songToRemove = parseInt(args[0]) - 1;
         let queueLen = serverQueue.songs.length;
-        if (songToRemove < 0 && songToRemove > queueLen - 1) return message.channel.send('``` ❗❗ ลบไม่ได้ ไม่มีคิวนี้/กำลังเล่นเพลงนี้อยู่ ❗❗```');
+        if (songToRemove < 0 || songToRemove > queueLen - 1) return message.channel.send('``` ❗❗ ลบไม่ได้ ไม่มีคิวนี้/กำลังเล่นเพลงนี้อยู่ ❗❗```');
         let temp = serverQueue.songs[songToRemove];
         serverQueue.songs.splice(songToRemove, 1)
         return message.channel.send(`\`\`\`✅ ลบ ${temp.title} สำเร็จ\`\`\``);
