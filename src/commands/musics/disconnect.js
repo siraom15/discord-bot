@@ -1,4 +1,4 @@
-let leave = (message, serverQueue, queue) => {
+let leave = (message, queue) => {
     if (!message.member.voice.channel)
         return message.reply(
             "คุณต้องอยู่ในห้องสนทนาจึงจะสั่งเตะได้ :triumph: ",

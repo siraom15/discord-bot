@@ -47,7 +47,6 @@ let setQueue = async (args, message, serverQueue, queue) => {
             playSong(message.guild, queueConstructor.songs[0], queue);
 
         } catch (err) {
-            console.log(err);
             queue.delete(message.guild.id);
             return message.channel.send(err);
         }

@@ -1,9 +1,7 @@
 const functions = require('./commands/commands');
 const { prefix } = require('../config.json');
 let handlerCommand = (message, queue) => {
-    //music
     const serverQueue = queue.get(message.guild.id);
-    //
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
@@ -73,6 +71,9 @@ let handlerCommand = (message, queue) => {
             break;
         case 'ประวัติ':
             functions.getAuditLog(message);
+            break;
+        case 'ลบ':
+            functions.deleteSong(args, message, serverQueue)
             break;
         default:
             functions.handleCommonText(message);

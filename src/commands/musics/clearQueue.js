@@ -8,7 +8,6 @@ let clearQueue = (message, serverQueue) => {
         message.reply("🧹 ล้างคิวเรียบร้อย")
         serverQueue.connection.dispatcher.end();
     } catch (err) {
-        console.log(err);
     }
 
 }
