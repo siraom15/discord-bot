@@ -3,9 +3,15 @@ const { YouTube } = require('popyt')
 const youtube = new YouTube(youtube_api)
 const ytdl = require('ytdl-core-discord');
 const playSong = require('./playSong');
+const { isBotInVoiceChannel } = require('./utils/functions');
+
 
 let setQueue = async (args, message, serverQueue, queue) => {
+    
     if (!args.length) return message.reply("❗❗ ใส่ชื่อเพลงด้วยนะ หรือลิ้งค์ Youtube ก็ได้นะ");
+    if(!isBotInVoiceChannel(message)){
+        serverQueue = undefined;
+    }
     let url = null;
     if (args[0].substring(0, 4) !== "http") {
         let name = args.join(" ").trim();

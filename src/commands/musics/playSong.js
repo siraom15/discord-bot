@@ -1,6 +1,3 @@
-const { youtube_api } = require('../../../config.json');
-const { YouTube } = require('popyt')
-const youtube = new YouTube(youtube_api)
 const ytdl = require('ytdl-core-discord');
 
 let playSong = async (guild, song, queue) => {
