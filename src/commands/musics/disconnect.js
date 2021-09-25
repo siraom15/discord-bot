@@ -5,6 +5,7 @@ let leave = (message, serverQueue, queue) => {
             { files: ['https://p.ptcdn.info/206/012/000/2638349_01434701901579410397_IMG-1289-PNG_l.jpg'] }
         );
     try {
+        serverQueue.songs = [];
         serverQueue.connection.dispatcher.end();
         return message.channel.send("``` ❗❗ ออกจากห้องสนทนาและล้างคิวเรียบร้อย 🧹🧹```");
     } catch (err) { }
