@@ -35,6 +35,10 @@ let playSong = async (guild, song, queue) => {
                         value: `${song.moreInfo.ownerChannelName}`,
                         inline: true,
                     },
+                    {
+                        name: '🔁🔁 เล่นวนเพลงในคิว 🔁🔁',
+                        value: `${serverQueue.loop ? 'เปิดอยู่' : 'ปิดอยู่'}`,
+                    },
                 ],
                 footer: {
                     text: 'Enjoy Music - aommie bot',
@@ -43,8 +47,14 @@ let playSong = async (guild, song, queue) => {
             serverQueue.textChannel.send({ embed: Songembed });
         })
         .on("finish", () => {
-            serverQueue.songs.shift();
-            playSong(guild, serverQueue.songs[0], queue);
+            if (serverQueue.loop) {
+                let playedSong = serverQueue.songs.shift();
+                serverQueue.songs.push(playedSong);
+                playSong(guild, serverQueue.songs[0], queue);
+            } else {
+                serverQueue.songs.shift();
+                playSong(guild, serverQueue.songs[0], queue);
+            }
         })
         .on("error", error => console.error(error))
         .setVolume(0.2);

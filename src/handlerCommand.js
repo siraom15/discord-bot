@@ -75,6 +75,9 @@ let handlerCommand = (message, queue) => {
         case 'ลบ':
             functions.deleteSong(args, message, serverQueue)
             break;
+        case 'เล่นวน':
+            functions.setLoop(message,serverQueue,queue);
+            break;
         default:
             functions.handleCommonText(message);
             break;

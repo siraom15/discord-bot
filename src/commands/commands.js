@@ -22,6 +22,7 @@ const rateLong = require('./other/rateLong')
 const handleCommonText = require('./handleCommonText')
 const getAuditLog = require('./server/getAuditLog')
 const deleteSong = require('./musics/deleteSong');
+const setLoop = require('./musics/setLoop');
 
 module.exports = {
     getAllCommand,
@@ -47,5 +48,6 @@ module.exports = {
     rateLong,
     handleCommonText,
     getAuditLog,
-    deleteSong
+    deleteSong,
+    setLoop
 }

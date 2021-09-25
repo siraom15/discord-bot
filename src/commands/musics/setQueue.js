@@ -43,7 +43,8 @@ let setQueue = async (args, message, serverQueue, queue) => {
             connection: null,
             songs: [],
             volume: 5,
-            playing: true
+            playing: true,
+            loop : false
         }
         queue.set(message.guild.id, queueConstructor);
         queueConstructor.songs.push(song);
@@ -59,7 +60,7 @@ let setQueue = async (args, message, serverQueue, queue) => {
     }
     else {
         serverQueue.songs.push(song);
-        return message.channel.send(`\`\`\`🎵🎵 ${song.title}ถูกเพิ่มเข้าคิวแล้ว ขอโดย ${song.requestBy} 🎵🎵\`\`\``);
+        return message.channel.send(`\`\`\`🎵🎵 ${song.title} ถูกเพิ่มเข้าคิวแล้ว ขอโดย ${song.requestBy} 🎵🎵\`\`\``);
     }
 }
 module.exports = setQueue;

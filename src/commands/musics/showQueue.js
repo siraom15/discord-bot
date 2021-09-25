@@ -10,6 +10,10 @@ let showQueue = (message, serverQueue, queue) => {
         title: ` 🎶 คิวเพลงใน ${message.guild.name} 🎶`,
         fields: [
             {
+                name: '🔁🔁 เล่นวนเพลงในคิว 🔁🔁',
+                value: `${serverQueue.loop ? 'เปิดอยู่' : 'ปิดอยู่'}`,
+            },
+            {
                 name: ':play_pause: ขณะนี้กำลังเล่น',
                 value: `${allSong[0].title} ขอโดย ${allSong[0].requestBy}`,
             },
