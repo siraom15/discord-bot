@@ -6,9 +6,7 @@ let clearQueue = (message, serverQueue) => {
     try {
         serverQueue.songs = [];
         message.reply("🧹 ล้างคิวเรียบร้อย")
-        serverQueue.connection.dispatcher.end();
-    } catch (err) {
-    }
+    } catch (err) {}
 
 }
 

@@ -7,9 +7,9 @@ const { isBotInVoiceChannel } = require('./utils/functions');
 
 
 let setQueue = async (args, message, serverQueue, queue) => {
-    
+
     if (!args.length) return message.reply("❗❗ ใส่ชื่อเพลงด้วยนะ หรือลิ้งค์ Youtube ก็ได้นะ");
-    if(!isBotInVoiceChannel(message)){
+    if (!isBotInVoiceChannel(message)) {
         serverQueue = undefined;
     }
     let url = null;
@@ -33,7 +33,7 @@ let setQueue = async (args, message, serverQueue, queue) => {
         "url": songInfo.videoDetails.video_url,
         "thumbnail": 'https://i.ytimg.com/vi/' + songInfo.videoDetails.videoId + '/maxresdefault.jpg',
         "requestBy": `${message.author.username}#${message.author.discriminator}`,
-        "moreInfo" : songInfo.videoDetails
+        "moreInfo": songInfo.videoDetails
     }
     if (!serverQueue) {
         const voiceChannel = message.member.voice.channel;
@@ -44,7 +44,7 @@ let setQueue = async (args, message, serverQueue, queue) => {
             songs: [],
             volume: 5,
             playing: true,
-            loop : false
+            loop: false
         }
         queue.set(message.guild.id, queueConstructor);
         queueConstructor.songs.push(song);

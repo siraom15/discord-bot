@@ -12,8 +12,7 @@ let deleteSong = (args, message, serverQueue) => {
             return message.channel.send(`\`\`\`✅ ลบ ${temp.title} สำเร็จ\`\`\``);
         }
         return message.channel.send('``` ❗❗ ลบไม่ได้ ไม่มีคิวนี้/กำลังเล่นเพลงนี้อยู่ ❗❗```');
-    } catch (err) {
-    }
+    } catch (err) {}
 }
 
 module.exports = deleteSong;

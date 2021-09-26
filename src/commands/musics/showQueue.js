@@ -10,8 +10,8 @@ let showQueue = (message, serverQueue, queue) => {
         title: ` 🎶 คิวเพลงใน ${message.guild.name} 🎶`,
         fields: [
             {
-                name: '🔁🔁 เล่นวนเพลงในคิว 🔁🔁',
-                value: `${serverQueue.loop ? 'เปิดอยู่' : 'ปิดอยู่'}`,
+                name: `🔁🔁 เล่นวนเพลงในคิว ${serverQueue.loop ? 'เปิดอยู่' : 'ปิดอยู่'} 🔁🔁`,
+                value: '\u200b',
             },
             {
                 name: ':play_pause: ขณะนี้กำลังเล่น',
@@ -25,7 +25,7 @@ let showQueue = (message, serverQueue, queue) => {
         ],
     };
     let i = 1;
-    for (var key in allSong) {
+    for (let key in allSong) {
         Embed.fields.push({ name: '\u200b', value: ` ${i++} : ${allSong[key].title} ขอโดย ${allSong[key].requestBy}` })
     }
     message.channel.send({ embed: Embed });

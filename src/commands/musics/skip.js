@@ -3,8 +3,11 @@ let skip = (message, serverQueue) => {
         return message.channel.send(
             "คุณต้องอยู่ในห้องสนทนาจึงจะข้ามเพลงได้ :smiling_face_with_3_hearts:  "
         );
-    if (!serverQueue)
-        return message.channel.send("คิวยังว่างอยู่ :laughing: ");
-    serverQueue.connection.dispatcher.end();
+    try {
+        if (!serverQueue)
+            return message.channel.send("```⛔ คิวยังว่างอยู่ ⛔ ```");
+        serverQueue.connection.dispatcher.end();
+    } catch (err) { }
+
 }
 module.exports = skip;
