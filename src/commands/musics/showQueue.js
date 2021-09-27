@@ -16,7 +16,7 @@ let showQueue = (message, serverQueue, queue) => {
             },
             {
                 name: '\u200b',
-                value: `:orange_square: คิวทั้งหมด ${allSong.length} เพลง :orange_square: `,
+                value: `🎵 คิวทั้งหมด ${allSong.length} เพลง 🎵 `,
                 inline: false,
             }
         ],
