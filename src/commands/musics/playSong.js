@@ -57,7 +57,7 @@ let playSong = async (guild, song, queue) => {
             }
         })
         .on("error", error => console.error(error))
-        .setVolume(0.2);
+        .setVolume(serverQueue.volume);
 }
 
 module.exports = playSong;

@@ -10,9 +10,9 @@ let setVolumn = (args, message, serverQueue) => {
     let volume = Math.floor(args[0]) / 100;
     try {
         serverQueue.connection.dispatcher.setVolume(volume);
+        serverQueue.volume = volume;
         message.channel.send(`\`\`\`🔊🔊 ปรับเสียงเป็น ${Math.floor(args[0])} แล้ว 🔊🔊\`\`\``);
-    } catch (err) {
-    }
+    } catch (err) { }
 
 }
 module.exports = setVolumn;

@@ -42,7 +42,7 @@ let setQueue = async (args, message, serverQueue, queue) => {
             voiceChannel: voiceChannel,
             connection: null,
             songs: [],
-            volume: 5,
+            volume: 0.5,
             playing: true,
             loop: false
         }
