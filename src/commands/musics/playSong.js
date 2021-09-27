@@ -36,8 +36,8 @@ let playSong = async (guild, song, queue) => {
                         inline: true,
                     },
                     {
-                        name: '🔁🔁 เล่นวนเพลงในคิว 🔁🔁',
-                        value: `${serverQueue.loop ? 'เปิดอยู่' : 'ปิดอยู่'}`,
+                        name: 'เล่นวนเพลงในคิว 🔁',
+                        value: `${serverQueue.loop ? 'เปิดอยู่ ✅' : 'ปิดอยู่ ❌'}`,
                     },
                 ],
                 footer: {
