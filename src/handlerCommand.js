@@ -78,6 +78,9 @@ let handlerCommand = (message, queue) => {
         case 'เล่นวน':
             functions.setLoop(args, message, serverQueue, queue);
             break;
+        case 'สลับคิว':
+            functions.shuffleQueue(message, serverQueue);
+            break;
         default:
             functions.handleCommonText(message);
             break;

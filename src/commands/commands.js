@@ -23,6 +23,7 @@ const handleCommonText = require('./handleCommonText')
 const getAuditLog = require('./server/getAuditLog')
 const deleteSong = require('./musics/deleteSong');
 const setLoop = require('./musics/setLoop');
+const shuffleQueue = require('./musics/shuffleQueue');
 
 module.exports = {
     getAllCommand,
@@ -49,5 +50,6 @@ module.exports = {
     handleCommonText,
     getAuditLog,
     deleteSong,
-    setLoop
+    setLoop,
+    shuffleQueue
 }
