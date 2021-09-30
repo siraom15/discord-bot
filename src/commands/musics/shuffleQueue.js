@@ -8,8 +8,8 @@ let shuffleQueue = (message, serverQueue) => {
         );
     try {
         let temp = serverQueue.songs;
-        let result = [temp[0], ...shuffle(temp.slice(1))];
-        serverQueue.songs = result;
+        let result = shuffle(temp.slice(1));
+        serverQueue.songs = [temp[0], ...result];
         message.channel.send(
             "```สลับคิวเรียบร้อย ✅```"
         );
