@@ -1,4 +1,4 @@
-let shuffle  = require('../../utils/shuffle');
+let shuffle = require('../../utils/shuffle');
 const showQueue = require('./showQueue');
 
 let shuffleQueue = (message, serverQueue) => {
@@ -8,13 +8,13 @@ let shuffleQueue = (message, serverQueue) => {
         );
     try {
         let temp = serverQueue.songs;
-        let result = shuffle(temp.slice(1));
+        let result = [temp[0], ...shuffle(temp.slice(1))];
         serverQueue.songs = result;
         message.channel.send(
             "```สลับคิวเรียบร้อย ✅```"
         );
-        return showQueue(message,serverQueue);
-    } catch (err) {}
+        return showQueue(message, serverQueue);
+    } catch (err) { }
 
 }
 
