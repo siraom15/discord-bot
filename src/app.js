@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const { prefix, discord_bot_token, chatchannal } = require('../config.json');
 const client = new Discord.Client();
 const queue = new Map();
-const handlerCommand = require('./handlerCommand')
+const handlerMessage = require('./handlerMessage')
 
 client.once('ready', () => {
     client.user.setStatus('online')
@@ -22,7 +22,7 @@ client.on('message', async message => {
     if (!message.guild) return;
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
-    handlerCommand(message, queue);
+    handlerMessage(message, queue);
 
 });
 

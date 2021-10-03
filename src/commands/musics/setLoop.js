@@ -12,7 +12,7 @@ let setLoop = (args, message, serverQueue, queue) => {
         } else {
             return message.channel.send('``` ❗❗ เล่นวน + เปิด/ปิด => เปลี่ยนสถานะเล่นวนซ้ำในคิว ❗❗```');
         }
-        message.channel.send(`\`\`\`🔁🔁 สถานะเล่นวนเพลงในคิว ${serverQueue.loop ? 'เปิดอยู่' : 'ปิดอยู่'} 🔁🔁 \`\`\``);
+        message.channel.send(`\`\`\`🔁 สถานะเล่นวนเพลงในคิว ${serverQueue.loop ? 'เปิดอยู่ ✅' : 'ปิดอยู่ ❌'} \`\`\``);
     } catch (err) { }
 
 }

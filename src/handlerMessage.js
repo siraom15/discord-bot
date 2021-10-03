@@ -1,6 +1,6 @@
 const functions = require('./commands/commands');
 const { prefix } = require('../config.json');
-let handlerCommand = (message, queue) => {
+let handlerMessage = (message, queue) => {
     const serverQueue = queue.get(message.guild.id);
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
@@ -87,4 +87,4 @@ let handlerCommand = (message, queue) => {
     }
 }
 
-module.exports = handlerCommand;
+module.exports = handlerMessage;

@@ -23,7 +23,7 @@ let showQueue = (message, serverQueue) => {
         Embed.fields.push({ name: '\u200b', value: ` ${i++} : ${allSong[key].title} ขอโดย ${allSong[key].requestBy}` })
     }
     Embed.fields.push({
-        name: `🔁🔁 เล่นวนเพลงในคิว ${serverQueue.loop ? 'เปิดอยู่ ✅' : 'ปิดอยู่ ❌'}🔁🔁`,
+        name: `🔁🔁 เล่นวนเพลงในคิว ${serverQueue.loop ? 'เปิดอยู่ ✅' : 'ปิดอยู่ ❌'}`,
         value: '\u200b',
     })
     message.channel.send({ embed: Embed });
