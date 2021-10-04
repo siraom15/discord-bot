@@ -1,4 +1,4 @@
-let setLoop = (args, message, serverQueue, queue) => {
+let setLoop = (args, message, serverQueue) => {
     if (!message.member.voice.channel)
         return message.channel.send(
             "``` ❗❗❗ คุณต้องอยู่ในห้องสนทนาจึงจะสั่งเล่นวนได้ ❗❗❗```"

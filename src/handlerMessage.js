@@ -45,10 +45,7 @@ let handlerMessage = (message, queue) => {
         case 'ดูดวง':
             functions.getHoro(message);
             break;
-        case 'เล่น':
-            functions.setQueue(args, message, serverQueue, queue);
-            break;
-        case 'เพลง':
+        case 'เล่น': case 'เพลง':
             functions.setQueue(args, message, serverQueue, queue);
             break;
         case 'ข้าม':
@@ -58,7 +55,7 @@ let handlerMessage = (message, queue) => {
             functions.disconnect(message, serverQueue, queue);
             break;
         case 'คิว':
-            functions.showQueue(message, serverQueue, queue);
+            functions.showQueue(message, serverQueue);
             break;
         case 'เสียง':
             functions.setVolumn(args, message, serverQueue);
@@ -76,7 +73,7 @@ let handlerMessage = (message, queue) => {
             functions.deleteSong(args, message, serverQueue)
             break;
         case 'เล่นวน':
-            functions.setLoop(args, message, serverQueue, queue);
+            functions.setLoop(args, message, serverQueue);
             break;
         case 'สลับคิว':
             functions.shuffleQueue(message, serverQueue);
