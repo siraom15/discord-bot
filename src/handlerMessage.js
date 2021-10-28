@@ -78,6 +78,9 @@ let handlerMessage = (message, queue) => {
         case 'สลับคิว':
             functions.shuffleQueue(message, serverQueue);
             break;
+        case 'คำคม' : 
+            functions.getCheab(message);
+            break;
         default:
             functions.handleCommonText(message);
             break;
