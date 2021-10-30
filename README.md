@@ -18,7 +18,7 @@
 * discord_bot_token : discord bot token [Link](https://discord.com/developers/applications)
 * chatchannal : channel name for bot
 * youtube_api : Youtube Data API V3 key [Link](https://developers.google.com/youtube/v3)
-* client_id : bot client id n [Link](https://discord.com/developers/applications)
+* client_id : bot client id [Link](https://discord.com/developers/applications)
 
 ### HowTo Use
 
