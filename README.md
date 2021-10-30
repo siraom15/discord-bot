@@ -1,36 +1,45 @@
-# Bot Discord by aommie
+# Bot Discord
+
 ### Requirement
-* NodeJS version 12+
-* Discord bot token [Link](https://discord.com/developers/applications)
+
+* [nodejs](https://nodejs.org/en/) v12+
+* Discord bot token [Here](https://discord.com/developers/applications), If you're new [read this article](https://www.writebots.com/discord-bot-token/)
 * Youtube Data API V3 [Link](https://developers.google.com/youtube/v3)
 
 ### Install
-* Download this repository
+
+* Download/Clone this repository
 * Install package (npm/yarn)
 * Setup config.json
 
-### Config
-* prefix : prefix command like (!เล่น)
+### Set up config.json
+
+* prefix : prefix command (!เล่น)
 * discord_bot_token : discord bot token [Link](https://discord.com/developers/applications)
 * chatchannal : channel name for bot
 * youtube_api : Youtube Data API V3 key [Link](https://developers.google.com/youtube/v3)
 * client_id : bot client id n [Link](https://discord.com/developers/applications)
+
 ### HowTo Use
 
 ```bash
 $ npm install
 $ npm start
 ```
+
 or
+
 ```
 $ yarn
 $ yarn start
 ```
-### Invite Link Discord 
 
-[Invite Link Discord](https://discord.com/oauth2/authorize?client_id=718169475777822841&scope=bot&permissions=8)
+### Invite this bot
+
+[Invite this bot to your discord channel](https://discord.com/oauth2/authorize?client_id=718169475777822841&scope=bot&permissions=8)
 
 ### All Command
+
 ```
 คำสั่งทั้งหมด
 เกี่ยวกับเพลง 🎵
