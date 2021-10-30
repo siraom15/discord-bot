@@ -20,14 +20,19 @@ let getCovidStat = async (message) => {
             fields: [
                 { name: '\u200B', value: '\u200B' },
                 { name: ':thermometer_face: ติดเชื้อเพิ่ม', value: `${numberWithComma(data.new_case)}`, inline: true },
-                { name: ':skull_crossbones: : เสียชีวิตเพิ่ม', value: `${numberWithComma(data.new_death)}`, inline: true },
                 { name: ':microbe: ติดเชื้อสะสม', value: `${numberWithComma(data.total_case)}`, inline: true },
+                
+                { name: '\u200B', value: '\u200B' },
+                { name: ':skull_crossbones: : เสียชีวิตเพิ่ม', value: `${numberWithComma(data.new_death)}`, inline: true },
                 { name: ':skull: เสียชีวิตสะสม', value: `${numberWithComma(data.total_death)}`, inline: true },
+                
+                { name: '\u200B', value: '\u200B' },
                 { name: ':hospital: กำลังรักษา', value: `${numberWithComma(data.new_recovered)}`, inline: true },
                 { name: ':muscle: รักษาหาย', value: `${numberWithComma(data.total_recovered)}`, inline: true },
+
+                { name: '\u200B', value: '\u200B' },
                 { name: ':x: อัตราการเสียชีวิต ', value: `${((data.total_death / data.total_case) * 100).toFixed(2)} %`, inline: true },
                 { name: ':white_check_mark: อัตราการรักษาหาย ', value: `${((data.total_recovered / data.total_case) * 100).toFixed(2)} %`, inline: true },
-                { name: '\u200B', value: '\u200B' },
             ]
         }
         message.channel.send({ embed: Embed })
