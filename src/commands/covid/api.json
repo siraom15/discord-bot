@@ -1,0 +1,5 @@
+{
+    "todayStatUrl" : "https://covid19.ddc.moph.go.th/api/Cases/today-cases-all",
+    "todayStatProvincesUrl" : "https://covid19.ddc.moph.go.th/api/Cases/today-cases-by-provinces",
+    "allCaseStatUrl" : "https://covid19.ddc.moph.go.th/api/Cases/timeline-cases-all"
+}

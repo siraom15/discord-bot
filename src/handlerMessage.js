@@ -81,6 +81,9 @@ let handlerMessage = (message, queue) => {
         case 'คำคม' : 
             functions.getCheab(message);
             break;
+        case 'โควิด' :
+            functions.getCovidStat(message);
+            break;
         default:
             functions.handleCommonText(message);
             break;

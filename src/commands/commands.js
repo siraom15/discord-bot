@@ -25,6 +25,7 @@ const deleteSong = require('./musics/deleteSong');
 const setLoop = require('./musics/setLoop');
 const shuffleQueue = require('./musics/shuffleQueue');
 const getCheab = require('./other/getCheab');
+const getCovidStat = require('./covid/getCovidStat');
 
 module.exports = {
     getAllCommand,
@@ -53,5 +54,6 @@ module.exports = {
     deleteSong,
     setLoop,
     shuffleQueue,
-    getCheab
+    getCheab,
+    getCovidStat
 }
