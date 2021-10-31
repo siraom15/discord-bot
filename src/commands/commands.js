@@ -26,6 +26,7 @@ const setLoop = require('./musics/setLoop');
 const shuffleQueue = require('./musics/shuffleQueue');
 const getCheab = require('./other/getCheab');
 const getCovidStat = require('./covid/getCovidStat');
+const getMongkolColor = require('./other/getMongkolColor');
 
 module.exports = {
     getAllCommand,
@@ -55,5 +56,6 @@ module.exports = {
     setLoop,
     shuffleQueue,
     getCheab,
-    getCovidStat
+    getCovidStat,
+    getMongkolColor
 }
