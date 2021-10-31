@@ -84,6 +84,9 @@ let handlerMessage = (message, queue) => {
         case 'โควิด' :
             functions.getCovidStat(message);
             break;
+        case 'สีมงคล' :
+            functions.getMongkolColor(message);
+            break;
         default:
             functions.handleCommonText(message);
             break;
