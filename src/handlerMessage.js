@@ -87,6 +87,9 @@ let handlerMessage = (message, queue) => {
         case 'สีมงคล' :
             functions.getMongkolColor(message);
             break;
+        case 'แมว':
+            functions.getCat(message);
+            break;
         default:
             functions.handleCommonText(message);
             break;
