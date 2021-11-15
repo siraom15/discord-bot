@@ -27,7 +27,8 @@ const shuffleQueue = require('./musics/shuffleQueue');
 const getCheab = require('./other/getCheab');
 const getCovidStat = require('./covid/getCovidStat');
 const getMongkolColor = require('./other/getMongkolColor');
-const getCat = require('./other/getCat')
+const getCat = require('./other/getCat');
+const getDog = require('./other/getDog');
 module.exports = {
     getAllCommand,
     getServerInfo,
@@ -58,5 +59,6 @@ module.exports = {
     getCheab,
     getCovidStat,
     getMongkolColor,
-    getCat
+    getCat,
+    getDog
 }

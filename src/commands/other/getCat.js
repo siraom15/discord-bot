@@ -8,5 +8,4 @@ let getCat = async (message) => {
     message.reply({ files :[catPicUrl] });
   } catch (e) {}
 };
-getCat();
 module.exports = getCat;

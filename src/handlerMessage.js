@@ -90,6 +90,9 @@ let handlerMessage = (message, queue) => {
         case 'แมว':
             functions.getCat(message);
             break;
+        case 'หมา':
+            functions.getDog(message);
+            break;
         default:
             functions.handleCommonText(message);
             break;
