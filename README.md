@@ -2,7 +2,7 @@
 
 ### Requirement
 
-* [nodejs](https://nodejs.org/en/) v12+
+* [nodejs](https://nodejs.org/en/) v14.15.3
 * Discord bot token [Here](https://discord.com/developers/applications), If you're new [read this article](https://www.writebots.com/discord-bot-token/)
 * Youtube Data API V3 [Link](https://developers.google.com/youtube/v3)
 
